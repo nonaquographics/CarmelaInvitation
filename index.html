@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Invitation Envelope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper-light:#F7F0DF;
+    --paper:#EEE4CD;
+    --paper-shadow:#D9CBA4;
+    --paper-deep:#C7B586;
+    --paper-line:rgba(52,40,18,0.28);
+    --gold:#C9A66B;
+    --gold-bright:#F0D9A6;
+    --bg:#08070a;
+    --card1:#171512;
+    --card2:#231e17;
+    --logo-size: 180px; 
+  }
+
+  *{box-sizing:border-box;}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+    url('RosesBg.webp') center/cover no-repeat fixed;
+    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  padding: 60px 16px;
+}
+
+  /* --- HEADER & NAVIGATION --- */
+  /* --- HEADER & NAVIGATION --- */
+  .site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  /* INDEPENDENT LOGO POSITIONING */
+  .logo-link {
+    position: absolute;
+    display: block !important;
+    width: var(--logo-size) !important;
+    height: var(--logo-size) !important;
+    pointer-events: auto;
+
+    /* ADJUST LOGO POSITION HERE FREELY (Without moving menus!) */
+    top: 35px;  /* Increase to move down, decrease to move up */
+    left: 28%;   /* Increase to move right, decrease to move left */
+  }
+
+  .logo-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.5))
+            drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+  }
+
+  .logo-link:hover .logo-img {
+    transform: scale(1.08);
+    filter: drop-shadow(0px 4px 18px rgba(0, 0, 0, 0.5))
+            drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.5));
+  }
+
+  /* INDEPENDENT CENTERED MENU POSITIONING */
+.nav-menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  pointer-events: auto;
+
+  top: 60px;
+  margin-left: 80px; /* Moves menu 30px to the RIGHT */
+  /* margin-left: -30px; Moves menu 30px to the LEFT */
+}
+/* Base Navigation Item Structure (No fixed width/height here!) */
+/* Centered Navigation Bar */
+/* Centered Navigation Bar */
+  .nav-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px; /* Adjust distance between menu items here */
+    align-items: center;
+    pointer-events: auto;
+  }
+
+  /* Fixed container box for ALL items so layout never jumps */
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;  /* Base container size */
+    height: 120px; 
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ----------------------------------------------------------- */
+  /* SET INDIVIDUAL SIZES HERE (Adjust scale numbers freely!)    */
+  /* ----------------------------------------------------------- */
+  
+  .home-item {
+    --scale: 1.1; /* Size for HOME */
+  }
+
+  .rsvp-item {
+    --scale: 1.1; /* Size for RSVP */
+  }
+
+  .where-item {
+    --scale: 1.2; /* Size for WHERE */
+  }
+
+  /* ----------------------------------------------------------- */
+  /* IMAGE STYLES                                               */
+  /* ----------------------------------------------------------- */
+
+  .nav-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    display: block !important;
+    object-fit: contain !important;
+    /* Lock center position and scale */
+    transform: translate(-50%, -50%) scale(var(--scale, 1)) !important;
+    transition: opacity 0.15s ease;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
+  }
+
+  /* ----------------------------------------------------------- */
+  /* HOVER STATES & 2D STOP-MOTION ANIMATION                    */
+  /* ----------------------------------------------------------- */
+
+  .nav-item img.hover-img {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-item:hover img.default-img {
+    opacity: 0;
+  }
+
+  .nav-item:hover img.hover-img {
+    opacity: 1;
+    /* Triggers the frame-by-frame 2D animation */
+    animation: stopMotion2D 0.3s steps(1) infinite !important;
+  }
+
+  /* 2D Flipbook / Stop-Motion Animation Frames */
+  @keyframes stopMotion2D {
+    0% {
+      rotate: 0deg;
+      translate: 0px 0px;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
+    }
+    25% {
+      /* Frame 1: Tilt right + slight nudge up */
+      rotate: 2deg;
+      translate: 1px -1px;
+      filter: drop-shadow(0px 0px 8px rgba(240,217,166,0.6));
+    }
+    50% {
+      /* Frame 2: Neutral + slight nudge down */
+      rotate: 0deg;
+      translate: 0px 1px;
+      filter: drop-shadow(0px 0px 6px rgba(240,217,166,0.4));
+    }
+    75% {
+      /* Frame 3: Tilt left + slight nudge left */
+      rotate: -2deg;
+      translate: -1px -1px;
+      filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7));
+    }
+  }
+  /* ------------------------- */
+
+  .hint{
+    margin-top:28px;
+    font-size:10px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:rgba(240,217,166,0.55);
+    opacity:1;
+    transition:opacity .5s ease;
+  }
+  .hint.hidden{ opacity:0; }
+
+  .stage{
+    perspective:1700px;
+    width:min(90vw, 420px);
+    height:min(90vw, 420px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  .shadow-blob{
+    position:absolute;
+    left:50%;
+    bottom:6%;
+    width:70%;
+    height:14%;
+    transform:translate(-50%, 0) scale(1);
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0.55), rgba(0,0,0,0) 70%);
+    filter:blur(6px);
+    transition:transform .35s ease-out, opacity .35s ease-out;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .scene{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform-style:preserve-3d;
+    transition:transform .35s cubic-bezier(.22,.75,.28,1);
+    will-change:transform;
+    position:relative;
+    z-index:1;
+  }
+
+  .envelope{
+    position:relative;
+    --env-w: min(78vw, 340px);
+    --env-h: calc(var(--env-w) * 0.66);
+    width:var(--env-w);
+    height:var(--env-h);
+    transform-style:preserve-3d;
+    cursor:pointer;
+    filter:
+      drop-shadow(0 18px 22px rgba(0,0,0,0.45))
+      drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+    transition:filter .35s ease-out, transform .35s cubic-bezier(.22,.75,.28,1);
+  }
+
+  .envelope.hovering{
+    filter:
+      drop-shadow(0 34px 34px rgba(0,0,0,0.5))
+      drop-shadow(0 8px 14px rgba(0,0,0,0.4));
+  }
+
+  .interior{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background:
+      linear-gradient(180deg, #17130d 0%, #2b2318 38%, var(--paper-shadow) 78%, var(--paper) 100%);
+    border-radius:0 0 3px 3px;
+    overflow:hidden;
+  }
+  .interior::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.5), transparent 65%);
+  }
+
+  .card-window{
+    position:absolute;
+    left:0; right:0;
+    bottom:0;
+    height:20%;
+    overflow:hidden;
+    z-index:1;
+    transition:height .6s cubic-bezier(.25,.8,.25,1);
+  }
+
+  .envelope.open .flap{
+    z-index:1;
+  }
+  .envelope.open .card-window{
+    z-index:2;
+  }
+
+  .card{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%) translateY(0) scale(.97);
+    height:calc(var(--env-h) * 1.75);
+    aspect-ratio:74/105;
+    background:
+      linear-gradient(150deg, var(--card2), var(--card1) 60%);
+    border-radius:2px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10%;
+    text-align:center;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+    opacity:.85;
+    transition:opacity .7s cubic-bezier(.22,.8,.25,1) .1s, transform .7s cubic-bezier(.22,.8,.25,1) .1s;
+    overflow:hidden;
+  }
+
+  .envelope.full .card{
+    opacity:1;
+    transform:translateX(-50%) translateY(-1.5%) scale(1);
+  }
+
+  .card::after{
+    content:'';
+    position:absolute;
+    top:-20%; left:-60%;
+    width:60%; height:140%;
+    background:linear-gradient(100deg, transparent, rgba(240,217,166,0.16), transparent);
+    transform:translateX(-40%) rotate(8deg);
+    opacity:0;
+    pointer-events:none;
+  }
+  .envelope.full .card::after{
+    animation:sheen 1.1s ease-out .55s 1;
+  }
+  @keyframes sheen{
+    0%{ opacity:0; transform:translateX(-60%) rotate(8deg); }
+    25%{ opacity:1; }
+    100%{ opacity:0; transform:translateX(220%) rotate(8deg); }
+  }
+
+  .card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:none;
+    opacity:0;
+    filter:blur(18px) saturate(1.2) brightness(1.15);
+    transform:scale(1.14);
+    clip-path:circle(2% at 50% 50%);
+    transition:
+      opacity 1s cubic-bezier(.19,1,.22,1),
+      filter 1.4s cubic-bezier(.19,1,.22,1),
+      transform 1.6s cubic-bezier(.19,1,.22,1),
+      clip-path 1.5s cubic-bezier(.19,1,.22,1);
+  }
+  .card img.show{
+    opacity:1;
+    filter:blur(0) saturate(1) brightness(1);
+    transform:scale(1);
+    clip-path:circle(75% at 50% 50%);
+  }
+
+  .card .placeholder{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:rgba(240,217,166,0.55);
+    font-size:18px;
+    line-height:1.7;
+    letter-spacing:.02em;
+  }
+
+  .pocket-front{
+    position:absolute;
+    left:0; right:0;
+    bottom:0;
+    height:37%;
+    z-index:3;
+    border-radius:0 0 3px 3px;
+    overflow:hidden;
+    background:linear-gradient(165deg, var(--paper-light), var(--paper) 55%, var(--paper-shadow) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      inset 0 -10px 18px -12px rgba(30,22,8,0.35);
+  }
+
+  .pocket-front svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+
+  .flap{
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    height:64%;
+    transform-origin:top center;
+    transition:transform .7s cubic-bezier(.3,.68,.3,1);
+    transform-style:preserve-3d;
+    z-index:4;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+  }
+
+  .flap-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  .flap-face svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+  .flap-back{
+    transform:rotateX(180deg);
+  }
+
+  .envelope-sides{
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    height:64%;
+    z-index:2;
+    pointer-events:none;
+  }
+  .envelope-sides svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
+  .seal{
+    transition:opacity .3s ease .1s, transform .4s cubic-bezier(.3,.68,.3,1);
+    transform-origin:170px 122px;
+  }
+  .envelope.open .seal{
+    opacity:0;
+    transform:scale(.6);
+  }
+
+  .envelope.open .flap{
+    transform:rotateX(-158deg);
+  }
+
+  .envelope.peek .card-window{
+    height:55%;
+  }
+
+  .envelope.full .card-window{
+    height:175%;
+    transition:height .75s cubic-bezier(.16,.85,.2,1);
+  }
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(4,3,2,0.88);
+    backdrop-filter:blur(6px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .45s ease;
+    z-index:10000; /* <--- CHANGE THIS FROM 10 TO 10000 */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .overlay.show{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .big-card{
+    --bc-w: min(94vw, calc((100dvh - 130px) / 1.4189), 560px);
+    position:relative;
+    width:var(--bc-w);
+    height:calc(var(--bc-w) * (105 / 74));
+    background:linear-gradient(150deg, var(--card2), var(--card1) 60%);
+    border-radius:4px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:10%;
+    text-align:center;
+    transform:perspective(1400px) scale(.78) translateY(26px) rotateX(10deg);
+    transform-origin:50% 85%;
+    opacity:0;
+    transition:transform 1s cubic-bezier(.16,.9,.18,1.25), opacity .5s ease;
+    overflow:hidden;
+    box-shadow:0 40px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
+    animation:glow-breathe 3.6s ease-in-out 1.9s infinite;
+  }
+  .overlay.show .big-card{
+    display:flex;
+    transform:perspective(1400px) scale(1) translateY(0) rotateX(0deg);
+    opacity:1;
+  }
+
+  @keyframes glow-breathe{
+    0%, 100%{ box-shadow:0 40px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 0 rgba(240,217,166,0); }
+    50%{ box-shadow:0 40px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 34px rgba(201,166,107,0.35); }
+  }
+
+  .big-card::after{
+    content:'';
+    position:absolute;
+    top:-20%; left:-60%;
+    width:50%; height:140%;
+    background:linear-gradient(100deg, transparent, rgba(240,217,166,0.14), transparent);
+    transform:translateX(-40%) rotate(8deg);
+    opacity:0;
+    pointer-events:none;
+  }
+  .overlay.show .big-card::after{
+    animation:sheen 1.4s ease-out 1.9s 1;
+  }
+
+  .frame-trace{
+    position:absolute;
+    inset:9px;
+    width:calc(100% - 18px);
+    height:calc(100% - 18px);
+    z-index:5;
+    pointer-events:none;
+  }
+  .frame-trace rect{
+    fill:none;
+    stroke:var(--gold-bright);
+    stroke-width:.6;
+    vector-effect:non-scaling-stroke;
+    stroke-dasharray:1;
+    stroke-dashoffset:1;
+    filter:drop-shadow(0 0 3px rgba(240,217,166,0.65));
+    transition:stroke-dashoffset 1.3s cubic-bezier(.65,0,.35,1) .45s;
+  }
+  .overlay.show .frame-trace rect{
+    stroke-dashoffset:0;
+  }
+
+  /* Remove gold frame lines, corner shapes, and sparkles from the popup card */
+  .frame-trace,
+  .corner,
+  .sparkle {
+    display: none !important;
+  }
+  .corner{
+    position:absolute;
+    width:9px; height:9px;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    transform:rotate(45deg) scale(0);
+    opacity:0;
+    z-index:5;
+    box-shadow:0 0 6px rgba(240,217,166,0.6);
+    transition:transform .5s cubic-bezier(.3,1.6,.4,1) 1.7s, opacity .4s ease 1.7s;
+  }
+  .corner.tl{ top:14px; left:14px; }
+  .corner.tr{ top:14px; right:14px; }
+  .corner.bl{ bottom:14px; left:14px; }
+  .corner.br{ bottom:14px; right:14px; }
+  .overlay.show .corner{
+    transform:rotate(45deg) scale(1);
+    opacity:1;
+  }
+
+  .sparkle{
+    position:absolute;
+    width:3px; height:3px;
+    border-radius:50%;
+    background:var(--gold-bright);
+    opacity:0;
+    z-index:5;
+    box-shadow:0 0 5px 1px rgba(240,217,166,0.8);
+    pointer-events:none;
+  }
+  .overlay.show .sparkle{
+    animation:twinkle 2.6s ease-in-out infinite;
+  }
+  .sparkle:nth-child(1){ top:18%; left:12%; animation-delay:2.1s; }
+  .sparkle:nth-child(2){ top:30%; right:10%; animation-delay:2.5s; }
+  .sparkle:nth-child(3){ bottom:24%; left:16%; animation-delay:2.9s; }
+  .sparkle:nth-child(4){ bottom:14%; right:14%; animation-delay:2.3s; }
+  .sparkle:nth-child(5){ top:8%; left:48%; animation-delay:3.1s; }
+  @keyframes twinkle{
+    0%, 100%{ opacity:0; transform:scale(.4); }
+    50%{ opacity:1; transform:scale(1.3); }
+  }
+
+  .curtain{
+    position:absolute;
+    top:0; bottom:0;
+    width:51%;
+    z-index:3;
+    background:linear-gradient(160deg, var(--card1) 0%, var(--card2) 55%, #0b0906 100%);
+    transition:transform 1.15s cubic-bezier(.76,0,.16,1) .75s;
+  }
+  .curtain::after{
+    content:'';
+    position:absolute;
+    top:0; bottom:0;
+    width:1.5px;
+    background:linear-gradient(var(--gold-bright), var(--gold));
+    box-shadow:0 0 8px rgba(240,217,166,0.55);
+  }
+  .curtain-left{ left:0; transform-origin:left center; }
+  .curtain-left::after{ right:0; }
+  .curtain-right{ right:0; transform-origin:right center; }
+  .curtain-right::after{ left:0; }
+  .overlay.show .curtain-left{ transform:translateX(-104%) rotateY(-4deg); }
+  .overlay.show .curtain-right{ transform:translateX(104%) rotateY(4deg); }
+
+  .big-card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:none;
+    opacity:0;
+    filter:blur(20px) saturate(1.2) brightness(1.15);
+    transform:scale(1.12);
+    clip-path:circle(2% at 50% 50%);
+    transition:
+      opacity 1.1s cubic-bezier(.19,1,.22,1) 1s,
+      filter 1.5s cubic-bezier(.19,1,.22,1) 1s,
+      transform 1.7s cubic-bezier(.19,1,.22,1) 1s,
+      clip-path 1.6s cubic-bezier(.19,1,.22,1) 1s;
+  }
+  .big-card img.show{
+    opacity:1;
+    filter:blur(0) saturate(1) brightness(1);
+    transform:scale(1);
+    clip-path:circle(75% at 50% 50%);
+  }
+
+  .big-card .placeholder{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    color:rgba(240,217,166,0.75);
+    font-size:23px;
+    line-height:1.75;
+    letter-spacing:.01em;
+  }
+
+  .close{
+    position:absolute;
+    top:14px; right:14px;
+    width:36px; height:36px;
+    border-radius:50%;
+    border:1px solid rgba(201,166,107,0.4);
+    background:rgba(0,0,0,0.35);
+    color:rgba(240,217,166,0.8);
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    z-index:6;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .close:hover{ background:rgba(201,166,107,0.15); border-color:rgba(201,166,107,0.7); }
+
+  @media (prefers-reduced-motion: reduce){
+    .scene, .flap, .card-window, .card, .card img, .big-card, .big-card img, .big-card::after, .seal, .card::after{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="#" class="logo-link" title="Home / Refresh">
+    <img src="Logo.png" alt="Logo" class="logo-img" />
+  </a>
+
+<nav class="nav-menu">
+    <!-- HOME MENU -->
+    <a href="index.html" class="nav-item home-item">
+      <img src="Home.png" alt="Home" class="default-img" />
+      <img src="HOMELINE.png" alt="Home" class="hover-img" />
+    </a>
+
+    <!-- RSVP MENU -->
+    <a href="rsvp.html" class="nav-item rsvp-item">
+      <img src="RSVP.png" alt="RSVP" class="default-img" />
+      <img src="RSVPLINE.png" alt="RSVP" class="hover-img" />
+    </a>
+
+    <!-- WHERE MENU -->
+    <a href="where.html" class="nav-item where-item">
+      <img src="Where.png" alt="Where" class="default-img" />
+      <img src="WHERELINE.png" alt="Where" class="hover-img" />
+    </a>
+  </nav>
+</header>
+
+<div class="stage" id="stage">
+  <div class="shadow-blob" id="shadowBlob"></div>
+  <div class="scene" id="scene">
+    <div class="envelope" id="envelope">
+
+      <div class="interior"></div>
+
+      <div class="card-window" id="cardWindow">
+        <div class="card" id="card">
+          <img id="inviteImg" alt="Your invitation" />
+          <p class="placeholder" id="cardPlaceholder">your invitation image goes here</p>
+        </div>
+      </div>
+
+      <div class="pocket-front">
+        <svg viewBox="0 0 340 81" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="pocketShade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#000000" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <polygon points="0,81 170,0 340,81" fill="url(#pocketShade)"/>
+          <line x1="0" y1="81" x2="170" y2="0" stroke="var(--paper-line)" stroke-width="1"/>
+          <line x1="340" y1="81" x2="170" y2="0" stroke="var(--paper-line)" stroke-width="1"/>
+          <line x1="1" y1="0.6" x2="169" y2="0.6" stroke="rgba(255,255,255,0.55)" stroke-width="1" opacity="0"/>
+        </svg>
+      </div>
+
+      <div class="envelope-sides">
+        <svg viewBox="0 0 340 143" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sideFillL" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--paper-light)"/>
+              <stop offset="70%" stop-color="var(--paper)"/>
+              <stop offset="100%" stop-color="var(--paper-shadow)"/>
+            </linearGradient>
+            <linearGradient id="sideFillR" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--paper-light)"/>
+              <stop offset="70%" stop-color="var(--paper)"/>
+              <stop offset="100%" stop-color="var(--paper-shadow)"/>
+            </linearGradient>
+          </defs>
+          <polygon points="0,0 0,143 170,143" fill="url(#sideFillL)"/>
+          <polygon points="340,0 340,143 170,143" fill="url(#sideFillR)"/>
+          <line x1="0" y1="0" x2="170" y2="143" stroke="var(--paper-line)" stroke-width="1"/>
+          <line x1="340" y1="0" x2="170" y2="143" stroke="var(--paper-line)" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <div class="flap" id="flap">
+        <div class="flap-face flap-front">
+          <svg viewBox="0 0 340 143" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="flapFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--paper-light)"/>
+                <stop offset="70%" stop-color="var(--paper)"/>
+                <stop offset="100%" stop-color="var(--paper-shadow)"/>
+              </linearGradient>
+              <linearGradient id="flapCrease" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#000000" stop-opacity="0.16"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,0 340,0 170,143" fill="url(#flapFill)"/>
+            <polygon points="0,0 170,143 340,0" fill="url(#flapCrease)"/>
+            <polyline points="0,0 170,143 340,0" fill="none" stroke="var(--paper-line)" stroke-width="1"/>
+            <line x1="6" y1="4" x2="168" y2="132" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+
+            <g class="seal" id="seal">
+              <circle cx="170" cy="122" r="15" fill="#8a6a34"/>
+              <circle cx="170" cy="122" r="15" fill="url(#sealGrad)"/>
+              <circle cx="170" cy="122" r="15" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="0.75"/>
+              <circle cx="170" cy="122" r="9.5" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="0.75"/>
+              <circle cx="170" cy="122" r="2" fill="rgba(0,0,0,0.2)"/>
+              <defs>
+                <radialGradient id="sealGrad" cx="35%" cy="30%" r="75%">
+                  <stop offset="0%" stop-color="#f0d9a6"/>
+                  <stop offset="55%" stop-color="#c9a66b"/>
+                  <stop offset="100%" stop-color="#8a6a34"/>
+                </radialGradient>
+              </defs>
+            </g>
+          </svg>
+        </div>
+
+        <div class="flap-face flap-back">
+          <svg viewBox="0 0 340 143" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="flapBackFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--paper-shadow)"/>
+                <stop offset="55%" stop-color="var(--paper-deep)"/>
+                <stop offset="100%" stop-color="#b3a06d"/>
+              </linearGradient>
+              <radialGradient id="flapBackShade" cx="50%" cy="100%" r="80%">
+                <stop offset="0%" stop-color="#000000" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <polygon points="0,0 340,0 170,143" fill="url(#flapBackFill)"/>
+            <polygon points="0,0 340,0 170,143" fill="url(#flapBackShade)"/>
+            <polyline points="0,0 170,143 340,0" fill="none" stroke="rgba(52,40,18,0.22)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<p class="hint" id="hint">tap to open</p>
+
+<div class="overlay" id="overlay">
+  <div class="big-card" id="bigCard">
+    <button class="close" id="closeBtn" aria-label="Close">✕</button>
+    <img id="bigImg" src="invitest.jpg" alt="Your invitation" />
+    <p class="placeholder" id="bigPlaceholder">your invitation image goes here</p>
+
+    <div class="curtain curtain-left"></div>
+    <div class="curtain curtain-right"></div>
+
+    <svg class="frame-trace" viewBox="0 0 74 105" preserveAspectRatio="none">
+      <rect x="2" y="2" width="70" height="101" rx="1.5" pathLength="1"/>
+    </svg>
+    <span class="corner tl"></span>
+    <span class="corner tr"></span>
+    <span class="corner bl"></span>
+    <span class="corner br"></span>
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+  </div>
+</div>
+
+<script>
+  function wireAutoImage(imgId, placeholderId){
+    const img = document.getElementById(imgId);
+    const placeholder = document.getElementById(placeholderId);
+    const reveal = () => {
+      if(!img.getAttribute('src')) return;
+      placeholder.style.display = 'none';
+      img.style.display = 'block';
+      requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('show')));
+    };
+    if(img.complete && img.naturalWidth) reveal();
+    img.addEventListener('load', reveal);
+    img.addEventListener('error', () => {
+      placeholder.style.display = '';
+      img.style.display = 'none';
+    });
+    new MutationObserver(reveal).observe(img, { attributes:true, attributeFilter:['src'] });
+  }
+
+  (function mirrorInviteImages(){
+    const invite = document.getElementById('inviteImg');
+    const big = document.getElementById('bigImg');
+    const inviteSrc = invite.getAttribute('src');
+    const bigSrc = big.getAttribute('src');
+    if(inviteSrc && !bigSrc) big.setAttribute('src', inviteSrc);
+    else if(bigSrc && !inviteSrc) invite.setAttribute('src', bigSrc);
+  })();
+
+  wireAutoImage('inviteImg', 'cardPlaceholder');
+  wireAutoImage('bigImg', 'bigPlaceholder');
+
+  const stage = document.getElementById('stage');
+  const scene = document.getElementById('scene');
+  const envelope = document.getElementById('envelope');
+  const shadowBlob = document.getElementById('shadowBlob');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+  const hint = document.getElementById('hint');
+
+  let isOpen = false;
+  let isExpanded = false;
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+  function tilt(e){
+    if(isOpen || coarsePointer) return;
+    const rect = stage.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    scene.style.transform = `rotateY(${x*20}deg) rotateX(${-y*20}deg) translateZ(6px)`;
+    shadowBlob.style.transform = `translate(calc(-50% + ${x*-18}px), ${y*10}px) scale(${1 - Math.abs(x)*0.15})`;
+  }
+  function resetTilt(){
+    scene.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0px)';
+    shadowBlob.style.transform = 'translate(-50%, 0) scale(1)';
+    envelope.classList.remove('hovering');
+  }
+  stage.addEventListener('mousemove', tilt);
+  stage.addEventListener('mouseenter', () => { if(!isOpen && !coarsePointer) envelope.classList.add('hovering'); });
+  stage.addEventListener('mouseleave', resetTilt);
+
+  function openEnvelope(){
+    if(isOpen) return;
+    isOpen = true;
+    envelope.classList.add('open');
+    resetTilt();
+    hint.classList.add('hidden');
+
+    setTimeout(() => {
+      envelope.classList.add('peek');
+    }, 200);
+
+    setTimeout(() => {
+      envelope.classList.remove('peek');
+      envelope.classList.add('full');
+    }, 800);
+
+    setTimeout(() => {
+      overlay.classList.add('show');
+      isExpanded = true;
+    }, 2900);
+  }
+
+  function closeEnvelope(){
+    overlay.classList.remove('show');
+    isExpanded = false;
+    setTimeout(() => {
+      envelope.classList.remove('open', 'peek', 'full');
+      hint.classList.remove('hidden');
+      isOpen = false;
+    }, 300);
+  }
+
+  envelope.addEventListener('click', () => {
+    if(!isOpen) openEnvelope();
+    else if(isOpen && !isExpanded){
+      overlay.classList.add('show');
+      isExpanded = true;
+    }
+  });
+  closeBtn.addEventListener('click', closeEnvelope);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeEnvelope(); });
+</script>
+
+</body>
+</html>
