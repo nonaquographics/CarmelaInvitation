@@ -41,50 +41,43 @@ body {
 }
 
   /* --- INTRO SPLASH ANIMATION --- */
-  .intro-screen {
+.intro-screen {
     position: fixed;
     inset: 0;
     z-index: 99999;
-    background: rgba(8, 7, 10, 0.85); /* Semi-dark background */
+    background: rgba(8, 7, 10, 0.92); /* Semi-dark backdrop */
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    /* Smooth fade out when finished */
-    transition: opacity 1s ease, visibility 1s ease;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
   }
 
-  .intro-screen.fade-out {
+.intro-screen.fade-out {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 
   .intro-image {
-    width: min(80vw, 80vh); /* Scale dynamically relative to viewport */
-    aspect-ratio: 1 / 1;      /* Keeps 3240x3240 square aspect ratio */
+    width: min(80vw, 80vh);
+    aspect-ratio: 1 / 1; /* Keeps 3240x3240 square aspect ratio */
     max-width: 500px;
     object-fit: contain;
-    /* Grow scale animation */
-    animation: growAndFade 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    
+    /* Grows smoothly and stays at full scale while waiting for loading */
+    animation: growAndHold 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   }
 
-  @keyframes growAndFade {
+  @keyframes growAndHold {
     0% {
       transform: scale(0.6);
       opacity: 0;
     }
-    30% {
-      opacity: 1;
-    }
-    75% {
+    100% {
       transform: scale(1.15);
       opacity: 1;
-    }
-    100% {
-      transform: scale(1.35);
-      opacity: 0;
     }
   }
 
@@ -771,26 +764,28 @@ body {
 <script>
   // Intro splash screen handler
 // Intro splash screen handler (plays once per session)
-  const introScreen = document.getElementById('introScreen');
-  const introImg = document.getElementById('introImg');
+const introScreen = document.getElementById('introScreen');
 
-  // 1. Check if the user has already seen the intro in this tab session
+  // Check if user has already seen it in this session
   if (sessionStorage.getItem('hasSeenIntro')) {
-    // Hide it immediately without playing the animation
     introScreen.style.display = 'none';
   } else {
-    // 2. If it's a fresh session, set the flag so it won't play on refresh
+    // Flag this session as seen
     sessionStorage.setItem('hasSeenIntro', 'true');
 
-    // Dismiss overlay when animation finishes
-    introImg.addEventListener('animationend', () => {
+    // Function to dismiss the loading screen
+    const dismissPreloader = () => {
       introScreen.classList.add('fade-out');
+    };
+
+    // Wait until EVERYTHING on the page is fully loaded (images, CSS, fonts)
+    window.addEventListener('load', () => {
+      // Small buffer delay so the user can briefly enjoy the animation
+      setTimeout(dismissPreloader, 1000); 
     });
 
-    // Dismiss overlay early if user taps/clicks it
-    introScreen.addEventListener('click', () => {
-      introScreen.classList.add('fade-out');
-    });
+    // Fallback: If tap/clicked before loading finishes, dismiss manually
+    introScreen.addEventListener('click', dismissPreloader);
   }
 
   function wireAutoImage(imgId, placeholderId){
