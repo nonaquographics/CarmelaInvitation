@@ -40,7 +40,54 @@ body {
   padding: 60px 16px;
 }
 
-  /* --- HEADER & NAVIGATION --- */
+  /* --- INTRO SPLASH ANIMATION --- */
+  .intro-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(8, 7, 10, 0.85); /* Semi-dark background */
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Smooth fade out when finished */
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+
+  .intro-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .intro-image {
+    width: min(80vw, 80vh); /* Scale dynamically relative to viewport */
+    aspect-ratio: 1 / 1;      /* Keeps 3240x3240 square aspect ratio */
+    max-width: 500px;
+    object-fit: contain;
+    /* Grow scale animation */
+    animation: growAndFade 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes growAndFade {
+    0% {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    75% {
+      transform: scale(1.15);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.35);
+      opacity: 0;
+    }
+  }
+
   /* --- HEADER & NAVIGATION --- */
   .site-header {
     position: fixed !important;
@@ -59,9 +106,9 @@ body {
     height: var(--logo-size) !important;
     pointer-events: auto;
 
-    /* ADJUST LOGO POSITION HERE FREELY (Without moving menus!) */
-    top: 35px;  /* Increase to move down, decrease to move up */
-    left: 28%;   /* Increase to move right, decrease to move left */
+    /* ADJUST LOGO POSITION HERE FREELY */
+    top: 35px;  
+    left: 28%;   
   }
 
   .logo-img {
@@ -81,63 +128,32 @@ body {
   }
 
   /* INDEPENDENT CENTERED MENU POSITIONING */
-.nav-menu {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  pointer-events: auto;
-
-  top: 60px;
-  margin-left: 80px; /* Moves menu 30px to the RIGHT */
-  /* margin-left: -30px; Moves menu 30px to the LEFT */
-}
-/* Base Navigation Item Structure (No fixed width/height here!) */
-/* Centered Navigation Bar */
-/* Centered Navigation Bar */
   .nav-menu {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 50px; /* Adjust distance between menu items here */
+    gap: 50px;
     align-items: center;
     pointer-events: auto;
+    top: 60px;
+    margin-left: 80px;
   }
 
-  /* Fixed container box for ALL items so layout never jumps */
   .nav-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 120px;  /* Base container size */
+    width: 120px;
     height: 120px; 
     position: relative;
     cursor: pointer;
     flex-shrink: 0;
   }
 
-  /* ----------------------------------------------------------- */
-  /* SET INDIVIDUAL SIZES HERE (Adjust scale numbers freely!)    */
-  /* ----------------------------------------------------------- */
-  
-  .home-item {
-    --scale: 1.1; /* Size for HOME */
-  }
-
-  .rsvp-item {
-    --scale: 1.1; /* Size for RSVP */
-  }
-
-  .where-item {
-    --scale: 1.3; /* Size for WHERE */
-  }
-
-  /* ----------------------------------------------------------- */
-  /* IMAGE STYLES                                               */
-  /* ----------------------------------------------------------- */
+  .home-item { --scale: 1.1; }
+  .rsvp-item { --scale: 1.1; }
+  .where-item { --scale: 1.3; }
 
   .nav-item img {
     position: absolute;
@@ -147,15 +163,10 @@ body {
     height: 100%;
     display: block !important;
     object-fit: contain !important;
-    /* Lock center position and scale */
     transform: translate(-50%, -50%) scale(var(--scale, 1)) !important;
     transition: opacity 0.15s ease;
     filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
   }
-
-  /* ----------------------------------------------------------- */
-  /* HOVER STATES & 2D STOP-MOTION ANIMATION                    */
-  /* ----------------------------------------------------------- */
 
   .nav-item img.hover-img {
     opacity: 0;
@@ -168,11 +179,9 @@ body {
 
   .nav-item:hover img.hover-img {
     opacity: 1;
-    /* Triggers the frame-by-frame 2D animation */
     animation: stopMotion2D 0.3s steps(1) infinite !important;
   }
 
-  /* 2D Flipbook / Stop-Motion Animation Frames */
   @keyframes stopMotion2D {
     0% {
       rotate: 0deg;
@@ -180,25 +189,21 @@ body {
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
     }
     25% {
-      /* Frame 1: Tilt right + slight nudge up */
       rotate: 2deg;
       translate: 1px -1px;
       filter: drop-shadow(0px 0px 8px rgba(240,217,166,0.6));
     }
     50% {
-      /* Frame 2: Neutral + slight nudge down */
       rotate: 0deg;
       translate: 0px 1px;
       filter: drop-shadow(0px 0px 6px rgba(240,217,166,0.4));
     }
     75% {
-      /* Frame 3: Tilt left + slight nudge left */
       rotate: -2deg;
       translate: -1px -1px;
       filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7));
     }
   }
-  /* ------------------------- */
 
   .hint{
     margin-top:28px;
@@ -464,7 +469,7 @@ body {
     transition:height .75s cubic-bezier(.16,.85,.2,1);
   }
 
-.overlay{
+  .overlay{
     position:fixed;
     inset:0;
     background:rgba(4,3,2,0.88);
@@ -472,7 +477,7 @@ body {
     opacity:0;
     pointer-events:none;
     transition:opacity .45s ease;
-    z-index:10000; /* <--- CHANGE THIS FROM 10 TO 10000 */
+    z-index:10000;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -527,74 +532,10 @@ body {
     animation:sheen 1.4s ease-out 1.9s 1;
   }
 
-  .frame-trace{
-    position:absolute;
-    inset:9px;
-    width:calc(100% - 18px);
-    height:calc(100% - 18px);
-    z-index:5;
-    pointer-events:none;
-  }
-  .frame-trace rect{
-    fill:none;
-    stroke:var(--gold-bright);
-    stroke-width:.6;
-    vector-effect:non-scaling-stroke;
-    stroke-dasharray:1;
-    stroke-dashoffset:1;
-    filter:drop-shadow(0 0 3px rgba(240,217,166,0.65));
-    transition:stroke-dashoffset 1.3s cubic-bezier(.65,0,.35,1) .45s;
-  }
-  .overlay.show .frame-trace rect{
-    stroke-dashoffset:0;
-  }
-
-  /* Remove gold frame lines, corner shapes, and sparkles from the popup card */
   .frame-trace,
   .corner,
   .sparkle {
     display: none !important;
-  }
-  .corner{
-    position:absolute;
-    width:9px; height:9px;
-    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
-    transform:rotate(45deg) scale(0);
-    opacity:0;
-    z-index:5;
-    box-shadow:0 0 6px rgba(240,217,166,0.6);
-    transition:transform .5s cubic-bezier(.3,1.6,.4,1) 1.7s, opacity .4s ease 1.7s;
-  }
-  .corner.tl{ top:14px; left:14px; }
-  .corner.tr{ top:14px; right:14px; }
-  .corner.bl{ bottom:14px; left:14px; }
-  .corner.br{ bottom:14px; right:14px; }
-  .overlay.show .corner{
-    transform:rotate(45deg) scale(1);
-    opacity:1;
-  }
-
-  .sparkle{
-    position:absolute;
-    width:3px; height:3px;
-    border-radius:50%;
-    background:var(--gold-bright);
-    opacity:0;
-    z-index:5;
-    box-shadow:0 0 5px 1px rgba(240,217,166,0.8);
-    pointer-events:none;
-  }
-  .overlay.show .sparkle{
-    animation:twinkle 2.6s ease-in-out infinite;
-  }
-  .sparkle:nth-child(1){ top:18%; left:12%; animation-delay:2.1s; }
-  .sparkle:nth-child(2){ top:30%; right:10%; animation-delay:2.5s; }
-  .sparkle:nth-child(3){ bottom:24%; left:16%; animation-delay:2.9s; }
-  .sparkle:nth-child(4){ bottom:14%; right:14%; animation-delay:2.3s; }
-  .sparkle:nth-child(5){ top:8%; left:48%; animation-delay:3.1s; }
-  @keyframes twinkle{
-    0%, 100%{ opacity:0; transform:scale(.4); }
-    50%{ opacity:1; transform:scale(1.3); }
   }
 
   .curtain{
@@ -672,31 +613,31 @@ body {
   .close:hover{ background:rgba(201,166,107,0.15); border-color:rgba(201,166,107,0.7); }
 
   @media (prefers-reduced-motion: reduce){
-    .scene, .flap, .card-window, .card, .card img, .big-card, .big-card img, .big-card::after, .seal, .card::after{ transition:none !important; animation:none !important; }
+    .scene, .flap, .card-window, .card, .card img, .big-card, .big-card img, .big-card::after, .seal, .card::after, .intro-image{ transition:none !important; animation:none !important; }
   }
 </style>
 </head>
 <body>
+
+<!-- INTRO ANIMATION SCREEN -->
+<div class="intro-screen" id="introScreen">
+  <img src="youreinvited.png" alt="You're Invited" class="intro-image" id="introImg" />
+</div>
 
 <header class="site-header">
   <a href="#" class="logo-link" title="Home / Refresh">
     <img src="Logo.png" alt="Logo" class="logo-img" />
   </a>
 
-<nav class="nav-menu">
-    <!-- HOME MENU -->
+  <nav class="nav-menu">
     <a href="index.html" class="nav-item home-item">
       <img src="HOME.png" alt="Home" class="default-img" />
       <img src="HOMELINE.png" alt="Home" class="hover-img" />
     </a>
-
-    <!-- RSVP MENU -->
     <a href="rsvp.html" class="nav-item rsvp-item">
       <img src="RSVP.png" alt="RSVP" class="default-img" />
       <img src="RSVPLINE.png" alt="RSVP" class="hover-img" />
     </a>
-
-    <!-- WHERE MENU -->
     <a href="where.html" class="nav-item where-item">
       <img src="WHERE.png" alt="Where" class="default-img" />
       <img src="WHERELINE.png" alt="Where" class="hover-img" />
@@ -824,23 +765,34 @@ body {
 
     <div class="curtain curtain-left"></div>
     <div class="curtain curtain-right"></div>
-
-    <svg class="frame-trace" viewBox="0 0 74 105" preserveAspectRatio="none">
-      <rect x="2" y="2" width="70" height="101" rx="1.5" pathLength="1"/>
-    </svg>
-    <span class="corner tl"></span>
-    <span class="corner tr"></span>
-    <span class="corner bl"></span>
-    <span class="corner br"></span>
-    <span class="sparkle"></span>
-    <span class="sparkle"></span>
-    <span class="sparkle"></span>
-    <span class="sparkle"></span>
-    <span class="sparkle"></span>
   </div>
 </div>
 
 <script>
+  // Intro splash screen handler
+// Intro splash screen handler (plays once per session)
+  const introScreen = document.getElementById('introScreen');
+  const introImg = document.getElementById('introImg');
+
+  // 1. Check if the user has already seen the intro in this tab session
+  if (sessionStorage.getItem('hasSeenIntro')) {
+    // Hide it immediately without playing the animation
+    introScreen.style.display = 'none';
+  } else {
+    // 2. If it's a fresh session, set the flag so it won't play on refresh
+    sessionStorage.setItem('hasSeenIntro', 'true');
+
+    // Dismiss overlay when animation finishes
+    introImg.addEventListener('animationend', () => {
+      introScreen.classList.add('fade-out');
+    });
+
+    // Dismiss overlay early if user taps/clicks it
+    introScreen.addEventListener('click', () => {
+      introScreen.classList.add('fade-out');
+    });
+  }
+
   function wireAutoImage(imgId, placeholderId){
     const img = document.getElementById(imgId);
     const placeholder = document.getElementById(placeholderId);
