@@ -40,13 +40,12 @@ body {
   padding: 60px 16px;
 }
 
-  /* --- INTRO SPLASH ANIMATION --- */
-.intro-screen {
+ /* --- PRELOADER INTRO SCREEN --- */
+  .intro-screen {
     position: fixed;
     inset: 0;
     z-index: 99999;
-    background: rgba(8, 7, 10, 0.92); /* Semi-dark backdrop */
-    backdrop-filter: blur(8px);
+    background: #050406; /* Deep dark background */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,29 +53,83 @@ body {
     transition: opacity 0.8s ease, visibility 0.8s ease;
   }
 
-.intro-screen.fade-out {
+  .intro-screen.fade-out {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 
+  /* --- SPOTLIGHT EFFECT --- */
+  .intro-spotlight {
+    position: absolute;
+    width: 140vw;
+    height: 140vh;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(240, 217, 166, 0.15) 0%,
+      rgba(201, 166, 107, 0.05) 35%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: pulseSpotlight 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseSpotlight {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  /* --- SPARKLES EFFECT --- */
+  .intro-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #F0D9A6;
+    border-radius: 50%;
+    box-shadow: 
+      0 0 6px 2px rgba(240, 217, 166, 0.8),
+      0 0 12px 4px rgba(201, 166, 107, 0.4);
+    pointer-events: none;
+    animation: sparkleTwinkle 2s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+
+  @keyframes sparkleTwinkle {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0.2) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.4) rotate(45deg);
+    }
+  }
+
+  /* --- HANDWRITTEN IMAGE ANIMATION --- */
   .intro-image {
+    position: relative;
+    z-index: 2;
     width: min(80vw, 80vh);
-    aspect-ratio: 1 / 1; /* Keeps 3240x3240 square aspect ratio */
+    aspect-ratio: 1 / 1;
     max-width: 500px;
     object-fit: contain;
-    
-    /* Grows smoothly and stays at full scale while waiting for loading */
+    filter: drop-shadow(0 0 20px rgba(240, 217, 166, 0.25));
     animation: growAndHold 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   }
 
   @keyframes growAndHold {
     0% {
-      transform: scale(0.6);
+      transform: scale(0.65);
       opacity: 0;
     }
     100% {
-      transform: scale(1.15);
+      transform: scale(1.1);
       opacity: 1;
     }
   }
@@ -614,6 +667,17 @@ body {
 
 <!-- INTRO ANIMATION SCREEN -->
 <div class="intro-screen" id="introScreen">
+  <!-- Soft central spotlight glow -->
+  <div class="intro-spotlight"></div>
+
+  <!-- Floating Sparkles -->
+  <div class="intro-sparkle" style="top: 25%; left: 20%; --d: 0s;"></div>
+  <div class="intro-sparkle" style="top: 15%; right: 25%; --d: 0.6s;"></div>
+  <div class="intro-sparkle" style="top: 70%; left: 30%; --d: 1.2s;"></div>
+  <div class="intro-sparkle" style="top: 65%; right: 20%; --d: 0.3s;"></div>
+  <div class="intro-sparkle" style="top: 40%; left: 15%; --d: 0.9s;"></div>
+  <div class="intro-sparkle" style="top: 35%; right: 12%; --d: 1.5s;"></div>
+
   <img src="youreinvited.png" alt="You're Invited" class="intro-image" id="introImg" />
 </div>
 
