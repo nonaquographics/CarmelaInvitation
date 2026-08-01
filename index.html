@@ -134,19 +134,17 @@
     z-index: 10;
   }
 
-/* "Until the celebration begins" image styling */
-.until-text-img {
-  max-width: var(--until-width);
-  width: 80%;
-  height: auto;
-  display: block;
-  margin-top: 0; /* Changed from var(--until-margin-top) */
-  margin-bottom: 20px;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
-
-  /* 👈 NOW THIS MOVES ONLY THIS IMAGE INDEPENDENTLY */
-  transform: translateY(var(--until-margin-top)); 
-}
+  /* "Until the celebration begins" image styling */
+  .until-text-img {
+    max-width: var(--until-width);
+    width: 80%;
+    height: auto;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
+    transform: translateY(var(--until-margin-top)); 
+  }
 
   .countdown-container {
     display: flex;
@@ -162,52 +160,44 @@
     align-items: center;
   }
 
-  /* Individual vertical alignment hooks */
-  .days-group { transform: translateY(var(--days-offset-y)); }
-  .hours-group { transform: translateY(var(--hours-offset-y)); }
-  .mins-group { transform: translateY(var(--mins-offset-y)); }
-  .secs-group { transform: translateY(var(--secs-offset-y)); }
-
   /* Custom Digit Sizes per Group */
-.days-group .digit-box {
-  width: var(--days-digit-width);
-  height: var(--days-digit-height);
-}
+  .days-group .digit-box {
+    width: var(--days-digit-width);
+    height: var(--days-digit-height);
+  }
 
-.hours-group .digit-box {
-  width: var(--hours-digit-width);
-  height: var(--hours-digit-height);
-}
+  .hours-group .digit-box {
+    width: var(--hours-digit-width);
+    height: var(--hours-digit-height);
+  }
 
-.mins-group .digit-box {
-  width: var(--mins-digit-width);
-  height: var(--mins-digit-height);
-}
+  .mins-group .digit-box {
+    width: var(--mins-digit-width);
+    height: var(--mins-digit-height);
+  }
 
-.secs-group .digit-box {
-  width: var(--secs-digit-width);
-  height: var(--secs-digit-height);
-}
+  .secs-group .digit-box {
+    width: var(--secs-digit-width);
+    height: var(--secs-digit-height);
+  }
 
-/* Custom Label Sizes per Group */
-.days-group .label-box { height: var(--days-label-height); }
-.hours-group .label-box { height: var(--hours-label-height); }
-.mins-group .label-box { height: var(--mins-label-height); }
-.secs-group .label-box { height: var(--secs-label-height); }
+  /* Custom Label Sizes per Group */
+  .days-group .label-box { height: var(--days-label-height); }
+  .hours-group .label-box { height: var(--hours-label-height); }
+  .mins-group .label-box { height: var(--mins-label-height); }
+  .secs-group .label-box { height: var(--secs-label-height); }
 
-/* 1. Make sure flex allows negative gap spacing to pull items across boundaries */
-.digits-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: var(--digit-gap);
-}
+  .digits-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--digit-gap);
+  }
 
-/* 2. Add negative margin control to the first digit in each pair */
-.digit-box:first-child {
-  margin-right: var(--digit-gap); /* Forcefully pulls the second digit closer */
-}
+  .digit-box:first-child {
+    margin-right: var(--digit-gap);
+  }
 
   .digit-box {
     width: var(--digit-width);   
@@ -224,7 +214,6 @@
     filter: drop-shadow(0 2px 8px rgba(240, 217, 166, 0.3));
   }
 
-  /* Custom image styling for colons */
   .colon-box {
     width: var(--colon-width);   
     height: var(--digit-height);
@@ -240,7 +229,6 @@
     object-fit: contain;
   }
 
-  /* Label image styling (Days, Hours, Minutes, Seconds) */
   .label-box {
     height: var(--label-height); 
     margin-top: 12px;
@@ -253,6 +241,59 @@
     height: 100%;
     width: auto;
     object-fit: contain;
+  }
+
+ /* --- 18 TRADITIONS SECTION STYLES --- */
+  .traditions-container {
+    width: 100%;
+    max-width: 850px;
+    margin: 60px auto 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .traditions-header-img {
+    width: 100%;
+    max-width: 600px; /* Adjust header image max width as needed */
+    height: auto;
+    display: block;
+    object-fit: contain;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 4px 15px rgba(0,0,0,0.8));
+  }
+
+  .hero-banner-section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 layout */
+    gap: 24px;
+  }
+
+  .tradition-card {
+    display: block;
+    text-decoration: none;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .tradition-card:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+
+  .hero-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+  }
+
+  @media (max-width: 600px) {
+    .hero-banner-section {
+      grid-template-columns: 1fr; /* Stack vertically on small phones */
+      gap: 16px;
+    }
   }
 
   .section-two-content {
@@ -1055,6 +1096,28 @@
     </div>
   </div>
 
+<!-- 18 TRADITIONS SECTION -->
+  <div class="traditions-container">
+    <!-- HERO/HEADER IMAGE -->
+    <img src="eighteentraditions.png" alt="Eighteen Traditions" class="traditions-header-img" />
+
+    <!-- 2x2 SELECTION GRID -->
+    <div class="hero-banner-section">
+      <a href="#" class="tradition-card">
+        <img src="gardenblooms.png" alt="Garden Blooms" class="hero-banner-img" />
+      </a>
+      <a href="#" class="tradition-card">
+        <img src="treasures.png" alt="Treasures" class="hero-banner-img" />
+      </a>
+      <a href="#" class="tradition-card">
+        <img src="blessings.png" alt="Blessings" class="hero-banner-img" />
+      </a>
+      <a href="#" class="tradition-card">
+        <img src="starlights.png" alt="Starlights" class="hero-banner-img" />
+      </a>
+    </div>
+  </div>
+
   <div class="section-two-content">
     <!-- Place your additional event details here -->
   </div>
@@ -1073,7 +1136,7 @@
 
 <script>
   // SET YOUR TARGET EVENT DATE AND TIME HERE (Year, Month 0-11, Day, Hour, Minute)
-  const eventDate = new Date(2026, 7, 21, 17, 0, 0).getTime(); 
+  const eventDate = new Date("2026-08-21T17:00:00+08:00").getTime(); 
 
   function updateCountdown() {
     const now = new Date().getTime();
