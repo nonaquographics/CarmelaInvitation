@@ -375,17 +375,26 @@
 
     /* 2. CONFIRM BUTTON SIZE & POSITION ON MOBILE */
     .confirm-button-link {
-      width: 70px !important;  /* Controls how wide/big the button is */
+      width: 62px !important;  /* Controls how wide/big the button is */
       bottom: 17% !important;   /* Move up/down (e.g. 10%, 15%) */
       left: 51% !important;     /* Horizontal position */
     }
+    
 
-  /* ADJUST DRESS CODE POSITION HERE */
+/* 1. Dress code wrapper with background & padding so the roses are visible */
   .dresscode-hero-wrapper {
-    margin-top: 200px !important;    /* Decrease (e.g. 0px or -10px) to move UP / Increase (e.g. 50px) to move DOWN */
-    margin-bottom: 20px !important; /* Adjust gap between Dress Code and the slideshow below */
+    background: url('traditionsbg.png') center top / cover no-repeat !important;
+    padding: 30px 20px; /* <--- Gives breathing room so the background shows around dresscode.png */
+    border-radius: 8px;
   }
 
+  /* 2. Marquee section background */
+ /* AFTER (FIXED): */
+  .marquee-viewport {
+    width: 100%;
+    overflow: hidden;
+    background: transparent !important;
+  }
     /* 4. SLIDESHOW TILE WIDTH */
     .marquee-tile {
       width: 180px !important;  /* Controls photo width (keeps aspect ratio square/clean) */
