@@ -498,15 +498,18 @@
 
   /* MOBILE OVERRIDES */
   @media (max-width: 600px) {
+    .hero-section {
+      background: 
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 70%, #000000 100%), 
+        url('rosesmobile.png') center/cover no-repeat;
+      padding-top: 170px;
+    }
+
     .site-header {
       flex-direction: column;
       align-items: center;
       gap: 5px;
       padding-top: 10px;
-    }
-    
-    .hero-section {
-      padding-top: 170px;
     }
 
     .nav-item {
@@ -1239,6 +1242,7 @@
   const assetsToPreload = [
     'youreinvited.png',
     'RosesBg.webp',
+    'rosesmobile.png',
     'Logo.png',
     'HOME.png',
     'HOMELINE.png',
