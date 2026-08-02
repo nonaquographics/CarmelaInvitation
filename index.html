@@ -19,50 +19,50 @@
     --bg:#08070a;
     --card1:#171512;
     --card2:#231e17;
-    --logo-size: 180px; 
+    --logo-size: clamp(70px, 18vw, 150px); 
 
     /* =========================================================
-       COUNTDOWN SIZING & SPACING CONTROLS 
+       COUNTDOWN SIZING & SPACING CONTROLS (DESKTOP DEFAULT)
        ========================================================= */
-    --digit-width: 65px;      /* Width of each digit image */
-    --digit-height: 98px;     /* Height of each digit image */
-    --digit-gap: -40px;         /* Gap between the two digits in a pair (e.g., 0 and 0) */
+    --digit-width: clamp(28px, 7.5vw, 65px);      
+    --digit-height: clamp(42px, 11vw, 98px);     
+    --digit-gap: clamp(-18px, -2.5vw, -40px);         
     
-    --label-height: 68px;     /* Height of Days/Hours/Mins/Secs text */
+    --label-height: clamp(24px, 6vw, 68px);     
     
-    --colon-width: 100px;      /* Width of the colon image */
-    --colon-height: 50px;     /* Height of the colon image */
+    --colon-width: clamp(12px, 3.5vw, 40px);      
+    --colon-height: clamp(22px, 6vw, 50px);     
     
-    --until-width: 380px;     /* Max width of "Until celebration" image */
+    --until-width: clamp(160px, 50vw, 340px);     
     
-    --countdown-gap: 28px;    /* Gap between Days, Colons, Hours, etc. */
+    --countdown-gap: clamp(4px, 1.5vw, 24px);    
 
     /* --- POSITIONING CONTROLS --- */
-    --until-margin-top: 30px; /* Pushes 'Until celebration' DOWN */
-    --colon-offset-y: 8px;  /* Shift colons UP (negative) or DOWN (positive) */
+    --until-margin-top: clamp(4px, 1.5vw, 20px); 
+    --colon-offset-y: 2px;  
 
- /* =========================================================
-     INDIVIDUAL DIGIT SIZING (Width / Height)
-     ========================================================= */
-  --days-digit-width: 65px;
-  --days-digit-height: 98px;
+    /* =========================================================
+       INDIVIDUAL DIGIT SIZING (Width / Height)
+       ========================================================= */
+    --days-digit-width: var(--digit-width);
+    --days-digit-height: var(--digit-height);
 
-  --hours-digit-width: 65px;
-  --hours-digit-height: 98px;
+    --hours-digit-width: var(--digit-width);
+    --hours-digit-height: var(--digit-height);
 
-  --mins-digit-width: 65px;
-  --mins-digit-height: 98px;
+    --mins-digit-width: var(--digit-width);
+    --mins-digit-height: var(--digit-height);
 
-  --secs-digit-width: 65px;
-  --secs-digit-height: 98px;
+    --secs-digit-width: var(--digit-width);
+    --secs-digit-height: var(--digit-height);
 
-  /* =========================================================
-     INDIVIDUAL LABEL SIZING (Days, Hours, Minutes, Seconds text)
-     ========================================================= */
-  --days-label-height: 60px;
-  --hours-label-height: 60px;
-  --mins-label-height: 55px;
-  --secs-label-height: 60px;
+    /* =========================================================
+       INDIVIDUAL LABEL SIZING (Days, Hours, Minutes, Seconds text)
+       ========================================================= */
+    --days-label-height: clamp(22px, 5.5vw, 60px);
+    --hours-label-height: clamp(22px, 5.5vw, 60px);
+    --mins-label-height: clamp(20px, 5vw, 55px);
+    --secs-label-height: clamp(22px, 5.5vw, 60px);
   }
 
   *{box-sizing:border-box;}
@@ -76,21 +76,23 @@
     overflow-x: hidden;
   }
 
-  /* --- HERO / SECTION 1 (FULL SCREEN WITH FRAME BG) --- */
+  /* --- HERO / SECTION 1 --- */
   .hero-section {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding-top: 130px; 
+    padding-bottom: 20px;
     background: 
       linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
       url('RosesBg.webp') center/cover no-repeat;
   }
 
-  /* --- SECTION 2 (NEW SECTION BELOW SCROLL) --- */
+  /* --- SECTION 2 --- */
   .section-two {
     width: 100%;
     min-height: 100vh;
@@ -99,6 +101,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 40px;
+    padding-bottom: 40px;
   }
 
   /* --- HEADER GRAPHIC & OVERLAYED COUNTDOWN --- */
@@ -110,6 +113,7 @@
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    padding: 0 10px;
   }
 
   .countdown-header-img {
@@ -120,7 +124,6 @@
     filter: drop-shadow(0 4px 15px rgba(0,0,0,0.8));
   }
 
-  /* Absolute position overlays everything inside the middle section */
   .countdown-overlay-wrapper {
     position: absolute;
     top: 50%;
@@ -131,17 +134,17 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 0 5px;
     z-index: 10;
   }
 
-  /* "Until the celebration begins" image styling */
   .until-text-img {
     max-width: var(--until-width);
-    width: 80%;
+    width: 60%;
     height: auto;
     display: block;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: clamp(2px, 1.5vw, 15px);
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
     transform: translateY(var(--until-margin-top)); 
   }
@@ -160,28 +163,11 @@
     align-items: center;
   }
 
-  /* Custom Digit Sizes per Group */
-  .days-group .digit-box {
-    width: var(--days-digit-width);
-    height: var(--days-digit-height);
-  }
+  .days-group .digit-box { width: var(--days-digit-width); height: var(--days-digit-height); }
+  .hours-group .digit-box { width: var(--hours-digit-width); height: var(--hours-digit-height); }
+  .mins-group .digit-box { width: var(--mins-digit-width); height: var(--mins-digit-height); }
+  .secs-group .digit-box { width: var(--secs-digit-width); height: var(--secs-digit-height); }
 
-  .hours-group .digit-box {
-    width: var(--hours-digit-width);
-    height: var(--hours-digit-height);
-  }
-
-  .mins-group .digit-box {
-    width: var(--mins-digit-width);
-    height: var(--mins-digit-height);
-  }
-
-  .secs-group .digit-box {
-    width: var(--secs-digit-width);
-    height: var(--secs-digit-height);
-  }
-
-  /* Custom Label Sizes per Group */
   .days-group .label-box { height: var(--days-label-height); }
   .hours-group .label-box { height: var(--hours-label-height); }
   .mins-group .label-box { height: var(--mins-label-height); }
@@ -231,7 +217,7 @@
 
   .label-box {
     height: var(--label-height); 
-    margin-top: 12px;
+    margin-top: clamp(2px, 1vw, 12px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,11 +229,11 @@
     object-fit: contain;
   }
 
- /* --- 18 TRADITIONS SECTION STYLES --- */
+  /* --- 18 TRADITIONS SECTION STYLES (DESKTOP ORIGINAL) --- */
   .traditions-container {
     width: 100%;
-    max-width: 850px;
-    margin: 60px auto 30px auto;
+    max-width: 1000px; 
+    margin: 40px auto 30px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,25 +242,27 @@
 
   .traditions-header-img {
     width: 100%;
-    max-width: 600px; /* Adjust header image max width as needed */
+    max-width: 500px;
     height: auto;
     display: block;
     object-fit: contain;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     filter: drop-shadow(0 4px 15px rgba(0,0,0,0.8));
   }
 
   .hero-banner-section {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2x2 layout */
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;    
+    column-gap: clamp(15px, 5vw, 80px); 
   }
 
   .tradition-card {
     display: block;
     text-decoration: none;
     transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
   }
 
   .tradition-card:hover {
@@ -283,17 +271,11 @@
 
   .hero-banner-img {
     width: 100%;
+    margin: 0 auto;
     height: auto;
     display: block;
     object-fit: contain;
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
-  }
-
-  @media (max-width: 600px) {
-    .hero-banner-section {
-      grid-template-columns: 1fr; /* Stack vertically on small phones */
-      gap: 16px;
-    }
   }
 
   .section-two-content {
@@ -324,7 +306,6 @@
     pointer-events: none;
   }
 
-  /* --- SPOTLIGHT EFFECT --- */
   .intro-spotlight {
     position: absolute;
     width: 140vw;
@@ -344,7 +325,6 @@
     100% { transform: scale(1.1); opacity: 1; }
   }
 
-  /* --- SPARKLES EFFECT --- */
   .intro-sparkle {
     position: absolute;
     width: 4px;
@@ -364,7 +344,6 @@
     50% { opacity: 1; transform: scale(1.4) rotate(45deg); }
   }
 
-  /* --- HANDWRITTEN IMAGE ANIMATION --- */
   .intro-image {
     position: relative;
     z-index: 2;
@@ -381,7 +360,6 @@
     100% { transform: scale(1.1); opacity: 1; }
   }
 
-  /* --- INTRO CONTENT CONTAINER --- */
   .intro-content {
     position: relative;
     z-index: 2;
@@ -396,7 +374,7 @@
   .intro-loading-text {
     margin-top: 15px;
     font-family: 'Goudy Bookletter 1911', serif;
-    font-size: 22px;
+    font-size: clamp(16px, 4vw, 22px);
     color: var(--gold-bright);
     letter-spacing: 0.06em;
     opacity: 0;
@@ -404,7 +382,7 @@
   }
 
   .intro-subtext {
-    font-size: 18px;
+    font-size: clamp(14px, 3.5vw, 18px);
     letter-spacing: 0.08em;
     color: rgba(240, 217, 166, 0.85);
     display: inline-block;
@@ -428,24 +406,27 @@
     50% { opacity: 1; transform: translateY(-2px); }
   }
 
-  /* --- HEADER & NAVIGATION --- */
+  /* --- HEADER & NAVIGATION (DESKTOP ORIGINAL) --- */
   .site-header {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 4vw;
     pointer-events: none;
   }
 
   .logo-link {
-    position: absolute;
     display: block !important;
     width: var(--logo-size) !important;
     height: var(--logo-size) !important;
     pointer-events: auto;
-    top: 35px;  
-    left: 28%;   
+    flex-shrink: 0;
   }
 
   .logo-img {
@@ -463,23 +444,18 @@
   }
 
   .nav-menu {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
-    gap: 50px;
+    gap: clamp(12px, 4vw, 40px);
     align-items: center;
     pointer-events: auto;
-    top: 60px;
-    margin-left: 80px;
   }
 
   .nav-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
-    height: 120px; 
+    width: clamp(50px, 8vw, 100px); 
+    height: clamp(50px, 8vw, 100px); 
     position: relative;
     cursor: pointer;
     flex-shrink: 0;
@@ -520,6 +496,52 @@
     75% { rotate: -2deg; translate: -1px -1px; filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7)); }
   }
 
+  /* =========================================================
+     ONLY MOBILE OVERRIDES (PRESERVES DESKTOP COMPLETELY)
+     ========================================================= */
+  @media (max-width: 600px) {
+    .site-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding-top: 10px;
+    }
+    
+    .hero-section {
+      padding-top: 170px;
+    }
+
+    /* Enlarge navigation items specifically for mobile touch */
+    .nav-item {
+      width: clamp(70px, 16vw, 110px);
+      height: clamp(70px, 16vw, 110px);
+    }
+
+    /* Mobile countdown tuning so text is legible and digits fit */
+    :root {
+      --until-width: 220px;
+      --digit-width: 26px;
+      --digit-height: 42px;
+      --digit-gap: -12px;
+      --colon-width: 10px;
+      --colon-height: 20px;
+      --countdown-gap: 2px;
+      --days-label-height: 22px;
+      --hours-label-height: 22px;
+      --mins-label-height: 20px;
+      --secs-label-height: 22px;
+    }
+
+    /* Mobile grid bounds for 18 traditions */
+    .hero-banner-section {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .hero-banner-img {
+      max-width: 280px;
+    }
+  }
+
   .hint{
     margin-top:28px;
     font-size:10px;
@@ -539,7 +561,7 @@
     align-items:center;
     justify-content:center;
     position:relative;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   .shadow-blob{
@@ -680,7 +702,7 @@
     font-family:'Cormorant Garamond', serif;
     font-style:italic;
     color:rgba(240,217,166,0.55);
-    font-size:18px;
+    font-size: clamp(12px, 3vw, 18px);
     line-height:1.7;
     letter-spacing:.02em;
   }
@@ -757,8 +779,70 @@
   }
   .overlay.show{ opacity:1; pointer-events:auto; }
 
+  /* --- TRADITION MODAL OVERLAYS (BLOOMS, TREASURES, BLESSINGS, STARLIGHTS) --- */
+  .tradition-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.4s cubic-bezier(0.25, 1, 0.5, 1), backdrop-filter 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+
+  .tradition-modal-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('traditionsbg.png') center/cover no-repeat;
+    opacity: 0;
+    transition: opacity 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+  }
+
+  .tradition-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .tradition-modal-overlay.active::before {
+    opacity: 0.75;
+  }
+
+  .tradition-modal-wrapper {
+    position: relative;
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.85) translateY(20px) rotateX(4deg);
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
+    opacity: 0;
+    perspective: 1000px;
+  }
+
+  .tradition-modal-overlay.active .tradition-modal-wrapper {
+    transform: scale(1) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+
+  .tradition-modal-img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.85));
+    border-radius: 4px;
+  }
+
   .big-card{
-    --bc-w: min(94vw, calc((100dvh - 130px) / 1.4189), 560px);
+    --bc-w: min(90vw, calc((100dvh - 100px) / 1.4189), 560px);
     position:relative;
     width:var(--bc-w);
     height:calc(var(--bc-w) * (105 / 74));
@@ -849,7 +933,7 @@
     font-style:italic;
     font-weight:500;
     color:rgba(240,217,166,0.75);
-    font-size:23px;
+    font-size: clamp(14px, 3.5vw, 23px);
     line-height:1.75;
     letter-spacing:.01em;
   }
@@ -871,7 +955,7 @@
   .close:hover{ background:rgba(201,166,107,0.15); border-color:rgba(201,166,107,0.7); }
 
   @media (prefers-reduced-motion: reduce){
-    .scene, .flap, .card-window, .card, .card img, .big-card, .big-card img, .big-card::after, .seal, .card::after, .intro-image{ transition:none !important; animation:none !important; }
+    .scene, .flap, .card-window, .card, .card img, .big-card, .big-card img, .big-card::after, .seal, .card::after, .intro-image, .tradition-modal-overlay, .tradition-modal-wrapper{ transition:none !important; animation:none !important; }
   }
 </style>
 </head>
@@ -1035,22 +1119,16 @@
   <p class="hint" id="hint">tap to open</p>
 </div>
 
-<!-- SECTION 2 (APPEARS BELOW WHEN SCROLLING DOWN) -->
+<!-- SECTION 2 -->
 <div class="section-two">
   
-  <!-- COUNTDOWN HEADER IMAGE WITH OVERLAYED TEXT AND COUNTDOWN -->
   <div class="countdown-divider">
     <img src="CountdownHeader.png" alt="Rose Thorns Divider" class="countdown-header-img" />
 
-    <!-- OVERLAY CONTAINER -->
     <div class="countdown-overlay-wrapper">
-      
-      <!-- "UNTIL THE CELEBRATION BEGINS" IMAGE -->
       <img src="until.png" alt="Until the celebration begins" class="until-text-img" />
 
-      <!-- COUNTDOWN TIMER DIGITS & LABELS -->
       <div class="countdown-container" id="countdown">
-        <!-- DAYS -->
         <div class="countdown-group days-group">
           <div class="digits-row">
             <div class="digit-box"><img id="days-tens" src="0.png" alt="0"></div>
@@ -1061,7 +1139,6 @@
 
         <div class="colon-box"><img src="colon.png" alt=":"></div>
 
-        <!-- HOURS -->
         <div class="countdown-group hours-group">
           <div class="digits-row">
             <div class="digit-box"><img id="hours-tens" src="0.png" alt="0"></div>
@@ -1072,7 +1149,6 @@
 
         <div class="colon-box"><img src="colon.png" alt=":"></div>
 
-        <!-- MINUTES -->
         <div class="countdown-group mins-group">
           <div class="digits-row">
             <div class="digit-box"><img id="mins-tens" src="0.png" alt="0"></div>
@@ -1083,7 +1159,6 @@
 
         <div class="colon-box"><img src="colon.png" alt=":"></div>
 
-        <!-- SECONDS -->
         <div class="countdown-group secs-group">
           <div class="digits-row">
             <div class="digit-box"><img id="secs-tens" src="0.png" alt="0"></div>
@@ -1096,30 +1171,26 @@
     </div>
   </div>
 
-<!-- 18 TRADITIONS SECTION -->
   <div class="traditions-container">
-    <!-- HERO/HEADER IMAGE -->
     <img src="eighteentraditions.png" alt="Eighteen Traditions" class="traditions-header-img" />
 
-    <!-- 2x2 SELECTION GRID -->
     <div class="hero-banner-section">
-      <a href="#" class="tradition-card">
+      <a href="javascript:void(0)" class="tradition-card" id="gardenBloomsCard">
         <img src="gardenblooms.png" alt="Garden Blooms" class="hero-banner-img" />
       </a>
-      <a href="#" class="tradition-card">
+      <a href="javascript:void(0)" class="tradition-card" id="treasuresCard">
         <img src="treasures.png" alt="Treasures" class="hero-banner-img" />
       </a>
-      <a href="#" class="tradition-card">
+      <a href="javascript:void(0)" class="tradition-card" id="blessingsCard">
         <img src="blessings.png" alt="Blessings" class="hero-banner-img" />
       </a>
-      <a href="#" class="tradition-card">
+      <a href="javascript:void(0)" class="tradition-card" id="starlightsCard">
         <img src="starlights.png" alt="Starlights" class="hero-banner-img" />
       </a>
     </div>
   </div>
 
   <div class="section-two-content">
-    <!-- Place your additional event details here -->
   </div>
 </div>
 
@@ -1134,8 +1205,35 @@
   </div>
 </div>
 
+<!-- BLOOMS MODAL OVERLAY -->
+<div class="tradition-modal-overlay" id="bloomsOverlay">
+  <div class="tradition-modal-wrapper">
+    <img src="18blooms.png" alt="18 Blooms" class="tradition-modal-img" />
+  </div>
+</div>
+
+<!-- TREASURES MODAL OVERLAY -->
+<div class="tradition-modal-overlay" id="treasuresOverlay">
+  <div class="tradition-modal-wrapper">
+    <img src="18treasures.png" alt="18 Treasures" class="tradition-modal-img" />
+  </div>
+</div>
+
+<!-- BLESSINGS MODAL OVERLAY -->
+<div class="tradition-modal-overlay" id="blessingsOverlay">
+  <div class="tradition-modal-wrapper">
+    <img src="18blessings.png" alt="18 Blessings" class="tradition-modal-img" />
+  </div>
+</div>
+
+<!-- STARLIGHTS MODAL OVERLAY -->
+<div class="tradition-modal-overlay" id="starlightsOverlay">
+  <div class="tradition-modal-wrapper">
+    <img src="18starlights.png" alt="18 Starlights" class="tradition-modal-img" />
+  </div>
+</div>
+
 <script>
-  // SET YOUR TARGET EVENT DATE AND TIME HERE (Year, Month 0-11, Day, Hour, Minute)
   const eventDate = new Date("2026-08-21T17:00:00+08:00").getTime(); 
 
   function updateCountdown() {
@@ -1167,8 +1265,8 @@
     const tensImg = document.getElementById(`${idPrefix}-tens`);
     const onesImg = document.getElementById(`${idPrefix}-ones`);
 
-    tensImg.src = `${str[0]}.png`;
-    onesImg.src = `${str[1]}.png`;
+    if (tensImg) tensImg.src = `${str[0]}.png`;
+    if (onesImg) onesImg.src = `${str[1]}.png`;
   }
 
   updateCountdown();
@@ -1292,6 +1390,30 @@
   });
   closeBtn.addEventListener('click', closeEnvelope);
   overlay.addEventListener('click', (e) => { if(e.target === overlay) closeEnvelope(); });
+
+  /* --- TRADITION MODALS JS LOGIC --- */
+  function setupTraditionModal(cardId, overlayId) {
+    const card = document.getElementById(cardId);
+    const overlay = document.getElementById(overlayId);
+
+    if (card && overlay) {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        overlay.classList.add('active');
+      });
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  setupTraditionModal('gardenBloomsCard', 'bloomsOverlay');
+  setupTraditionModal('treasuresCard', 'treasuresOverlay');
+  setupTraditionModal('blessingsCard', 'blessingsOverlay');
+  setupTraditionModal('starlightsCard', 'starlightsOverlay');
 </script>
 
 </body>
