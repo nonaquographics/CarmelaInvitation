@@ -1234,6 +1234,74 @@
 </div>
 
 <script>
+  /* =========================================================
+     1. ASSET PRELOADER LOGIC (PROPER LOADING TRACKER)
+     ========================================================= */
+  const introScreen = document.getElementById('introScreen');
+  const MIN_PRELOAD_TIME = 2800; // Minimum time (in ms) to display preloader for visual effect
+  const startTime = Date.now();
+
+  // List of key images that must be downloaded before entering
+  const assetsToPreload = [
+    'youreinvited.png',
+    'RosesBg.webp',
+    'Logo.png',
+    'HOME.png',
+    'HOMELINE.png',
+    'RSVP.png',
+    'RSVPLINE.png',
+    'WHERE.png',
+    'WHERELINE.png',
+    'CountdownHeader.png',
+    'until.png',
+    'days.png',
+    'hours.png',
+    'minutes.png',
+    'seconds.png',
+    'colon.png',
+    'eighteentraditions.png',
+    'gardenblooms.png',
+    'treasures.png',
+    'blessings.png',
+    'starlights.png',
+    '18blooms.png',
+    '18treasures.png',
+    '18blessings.png',
+    '18starlights.png',
+    'traditionsbg.png'
+  ];
+
+  function dismissPreloader() {
+    if (!introScreen.classList.contains('fade-out')) {
+      introScreen.classList.add('fade-out');
+    }
+  }
+
+  // Preload image promises
+  const imagePromises = assetsToPreload.map(src => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = resolve;
+      img.onerror = resolve; // Resolve anyway to prevent infinite loading on broken links
+    });
+  });
+
+  // Wait for all images AND minimum display time
+  Promise.all([
+    Promise.all(imagePromises),
+    new Promise(resolve => setTimeout(resolve, MIN_PRELOAD_TIME))
+  ]).then(() => {
+    dismissPreloader();
+  });
+
+  // Allow user to tap/click to skip manually if desired
+  introScreen.addEventListener('click', dismissPreloader);
+
+
+  /* =========================================================
+     2. COUNTDOWN TIMER LOGIC
+     ========================================================= */
   const eventDate = new Date("2026-08-21T17:00:00+08:00").getTime(); 
 
   function updateCountdown() {
@@ -1272,24 +1340,10 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  const introScreen = document.getElementById('introScreen');
 
-  if (sessionStorage.getItem('hasSeenIntro')) {
-    introScreen.style.display = 'none';
-  } else {
-    sessionStorage.setItem('hasSeenIntro', 'true');
-
-    const dismissPreloader = () => {
-      introScreen.classList.add('fade-out');
-    };
-
-    window.addEventListener('load', () => {
-      setTimeout(dismissPreloader, 1000); 
-    });
-
-    introScreen.addEventListener('click', dismissPreloader);
-  }
-
+  /* =========================================================
+     3. ENVELOPE & CARD ANIMATIONS
+     ========================================================= */
   function wireAutoImage(imgId, placeholderId){
     const img = document.getElementById(imgId);
     const placeholder = document.getElementById(placeholderId);
@@ -1340,11 +1394,13 @@
     scene.style.transform = `rotateY(${x*20}deg) rotateX(${-y*20}deg) translateZ(6px)`;
     shadowBlob.style.transform = `translate(calc(-50% + ${x*-18}px), ${y*10}px) scale(${1 - Math.abs(x)*0.15})`;
   }
+
   function resetTilt(){
     scene.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0px)';
     shadowBlob.style.transform = 'translate(-50%, 0) scale(1)';
     envelope.classList.remove('hovering');
   }
+
   stage.addEventListener('mousemove', tilt);
   stage.addEventListener('mouseenter', () => { if(!isOpen && !coarsePointer) envelope.classList.add('hovering'); });
   stage.addEventListener('mouseleave', resetTilt);
@@ -1391,7 +1447,10 @@
   closeBtn.addEventListener('click', closeEnvelope);
   overlay.addEventListener('click', (e) => { if(e.target === overlay) closeEnvelope(); });
 
-  /* --- TRADITION MODALS JS LOGIC --- */
+
+  /* =========================================================
+     4. TRADITIONS MODALS LOGIC
+     ========================================================= */
   function setupTraditionModal(cardId, overlayId) {
     const card = document.getElementById(cardId);
     const overlay = document.getElementById(overlayId);
