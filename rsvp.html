@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP - Birthday Celebration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --logo-size: clamp(70px, 18vw, 150px); 
+
+    /* =========================================================
+       RSVP PAGE LAYOUT & POSITIONING CONTROLS
+       ========================================================= */
+    
+    /* 1. LETTER IMAGE (rsvpletter.png) */
+    --letter-width: clamp(270px, 85vw, 680px); 
+    --letter-top-offset: 70px;                 
+    --letter-shift-x: 40px;                     
+
+    /* 2. CONFIRM BUTTON (confirm.png) */
+    --confirm-width: clamp(120px, 35vw, 4px); 
+    --confirm-bottom: 17%;                     
+    --confirm-left: 51%;                       
+    --confirm-shift-x: -50%;                   
+
+    /* 3. CONFIRM HOVER LINE (confirmline.png) */
+    --line-width: 100%;                        
+    --line-offset-y: -92px;                      
+    --line-shift-x: 0px;                       
+
+    /* 4. DRESS CODE & CAROUSEL CONTROLS */
+    --hero-max-width: 740px;                  
+    --marquee-height: 480px;             
+  }
+
+  * { box-sizing: border-box; }
+
+  /* --- BODY & CONTAINER --- */
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* --- RSVP CONTAINER --- */
+  .rsvp-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: var(--letter-top-offset);
+    padding-bottom: 120px;
+    background-color: #000000;
+  }
+
+  /* LOCKED BACKGROUND LAYER */
+  .rsvp-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url('rsvpbg.png') center top / cover no-repeat;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .site-header,
+  .rsvp-letter-wrapper,
+  .dresscode-hero-wrapper,
+  .marquee-section {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* --- SITE HEADER & NAV --- */
+  .site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 4vw;
+    pointer-events: none;
+  }
+
+  .logo-link {
+    display: block !important;
+    width: var(--logo-size) !important;
+    height: var(--logo-size) !important;
+    pointer-events: auto;
+    flex-shrink: 0;
+  }
+
+  .logo-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.5)) drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+  }
+
+  .logo-link:hover .logo-img {
+    transform: scale(1.08);
+    filter: drop-shadow(0px 4px 18px rgba(0, 0, 0, 0.5)) drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.5));
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: clamp(12px, 4vw, 40px);
+    align-items: center;
+    pointer-events: auto;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(50px, 8vw, 100px); 
+    height: clamp(50px, 8vw, 100px); 
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .home-item { --scale: 1.1; }
+  .rsvp-item { --scale: 1.1; }
+  .where-item { --scale: 1.3; }
+
+  .nav-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    display: block !important;
+    object-fit: contain !important;
+    transform: translate(-50%, -50%) scale(var(--scale, 1)) !important;
+    transition: opacity 0.15s ease;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
+  }
+
+  .nav-item img.hover-img {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-item:hover img.default-img { opacity: 0; }
+  .nav-item:hover img.hover-img {
+    opacity: 1;
+    animation: stopMotion2D 0.3s steps(1) infinite !important;
+  }
+
+  @keyframes stopMotion2D {
+    0% { rotate: 0deg; translate: 0px 0px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6)); }
+    25% { rotate: 2deg; translate: 1px -1px; filter: drop-shadow(0px 0px 8px rgba(240,217,166,0.6)); }
+    50% { rotate: 0deg; translate: 0px 1px; filter: drop-shadow(0px 0px 6px rgba(240,217,166,0.4)); }
+    75% { rotate: -2deg; translate: -1px -1px; filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7)); }
+  }
+
+  /* --- RSVP STAGE & LETTER --- */
+  .rsvp-letter-wrapper {
+    position: relative;
+    width: var(--letter-width);
+    transform: translateX(var(--letter-shift-x));
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7));
+  }
+
+  .rsvp-letter-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* --- CONFIRM BUTTON & HOVER LINE --- */
+  .confirm-button-link {
+    position: absolute;
+    bottom: var(--confirm-bottom);
+    left: var(--confirm-left);
+    transform: translateX(var(--confirm-shift-x));
+    width: var(--confirm-width);
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .confirm-img-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .confirm-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    transition: opacity 0.15s ease;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+  }
+
+  .confirm-line-img {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: var(--line-width);
+    height: auto;
+    transform: translateX(calc(-50% + var(--line-shift-x))) translateY(var(--line-offset-y));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    filter: drop-shadow(0 0 6px rgba(240, 217, 166, 0.6));
+  }
+
+  .confirm-button-link:hover .confirm-img {
+    opacity: 0;
+  }
+
+  .confirm-button-link:hover .confirm-line-img {
+    opacity: 1;
+    animation: linePulse 0.3s steps(1) infinite !important;
+  }
+
+  @keyframes linePulse {
+    0% { rotate: 0deg; translate: 0px 0px; }
+    25% { rotate: 2deg; translate: 1px -1px; filter: drop-shadow(0px 0px 8px rgba(240,217,166,0.6)); }
+    50% { rotate: 0deg; translate: 0px 1px; filter: drop-shadow(0px 0px 6px rgba(240,217,166,0.4)); }
+    75% { rotate: -2deg; translate: -1px -1px; filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7)); }
+  }
+
+  /* =========================================================
+     DRESS CODE HERO SECTION
+     ========================================================= */
+  .dresscode-hero-wrapper {
+    width: 92vw;
+    max-width: var(--hero-max-width);
+    margin: 120px auto 60px auto;
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9));
+  }
+
+  .dresscode-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* =========================================================
+     INFINITE AUTO-SCROLLING MARQUEE GRID (FLUSH & CLOSE)
+     ========================================================= */
+  .marquee-section {
+    width: 100vw;
+    margin: 40px 0 0 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .marquee-viewport {
+    width: 100%;
+    overflow: hidden;
+    background: #000000;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: infiniteScroll 35s linear infinite;
+  }
+
+  /* Pause auto-scroll on mouse hover */
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes infiniteScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* --- MARQUEE TILES (FLUSH SIDE-BY-SIDE) --- */
+  .marquee-tile {
+    width: 320px;
+    height: var(--marquee-height);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .marquee-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* --- TEXT TILES (EDITORIAL STYLED) --- */
+  .text-tile {
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #faf9f5;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+  }
+
+  .text-tile.style-1 {
+    background-color: #000000; /* Soft pastel lavender blue */
+  }
+
+  .text-tile.style-2 {
+    background-color: #290404; /* Muted gold/khaki tone */
+    color: #bb3434;
+  }
+
+  .text-content {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+  }
+
+  .text-content span {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 36px;
+    margin-top: 4px;
+  }
+
+  .arrow-indicator {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+ /* =========================================================
+     MOBILE RESPONSIVENESS ONLY (< 600px)
+     ========================================================= */
+  @media (max-width: 600px) {
+    :root {
+      --letter-top-offset: 130px;
+      
+      /* 1. SLIDESHOW HEIGHT (Lower number = shorter photos) */
+      --marquee-height: 260px; 
+    }
+
+    .rsvp-container::before {
+    background-image: url('rsvpmobile.png') !important;
+  }
+
+    /* 2. CONFIRM BUTTON SIZE & POSITION ON MOBILE */
+    .confirm-button-link {
+      width: 70px !important;  /* Controls how wide/big the button is */
+      bottom: 17% !important;   /* Move up/down (e.g. 10%, 15%) */
+      left: 51% !important;     /* Horizontal position */
+    }
+
+  /* ADJUST DRESS CODE POSITION HERE */
+  .dresscode-hero-wrapper {
+    margin-top: 200px !important;    /* Decrease (e.g. 0px or -10px) to move UP / Increase (e.g. 50px) to move DOWN */
+    margin-bottom: 20px !important; /* Adjust gap between Dress Code and the slideshow below */
+  }
+
+    /* 4. SLIDESHOW TILE WIDTH */
+    .marquee-tile {
+      width: 180px !important;  /* Controls photo width (keeps aspect ratio square/clean) */
+    }
+
+    /* Keep header horizontal & unstacked */
+    .site-header {
+      padding: 10px 15px;
+    }
+
+    .nav-menu {
+      gap: 10px;
+    }
+
+    .nav-item {
+      width: 55px;
+      height: 55px;
+    }
+
+  .rsvp-letter-wrapper {
+    margin-top: 130px !important;  /* Decrease/Negative (e.g., -40px) to move UP | Increase (e.g., 30px) to move DOWN */
+    margin-left: 5px !important;
+  }
+
+    .text-tile {
+      padding: 18px 12px;
+    }
+
+    .text-content {
+      font-size: 16px;
+    }
+
+    .text-content span {
+      font-size: 22px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="rsvp-container">
+  
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <a href="index.html" class="logo-link" title="Home">
+      <img src="Logo.png" alt="Logo" class="logo-img" />
+    </a>
+
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-item home-item">
+        <img src="HOME.png" alt="Home" class="default-img" />
+        <img src="HOMELINE.png" alt="Home" class="hover-img" />
+      </a>
+      <a href="rsvp.html" class="nav-item rsvp-item">
+        <img src="RSVP.png" alt="RSVP" class="default-img" />
+        <img src="RSVPLINE.png" alt="RSVP" class="hover-img" />
+      </a>
+      <a href="where.html" class="nav-item where-item">
+        <img src="WHERE.png" alt="Where" class="default-img" />
+        <img src="WHERELINE.png" alt="Where" class="hover-img" />
+      </a>
+    </nav>
+  </header>
+
+  <!-- LETTER & CONFIRMATION SECTION -->
+  <div class="rsvp-letter-wrapper">
+    <img src="rsvpletter.png" alt="RSVP Letter" class="rsvp-letter-img" />
+
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdvxL1HIcgzl25Sc59DRgaymSPoYBWZj4iObOvNvTctZqRLKA/viewform" target="_blank" rel="noopener noreferrer" class="confirm-button-link">
+      <div class="confirm-img-container">
+        <img src="confirm.png" alt="Confirm Attendance" class="confirm-img" />
+        <img src="confirmline.png" alt="Confirm Hover Line" class="confirm-line-img" />
+      </div>
+    </a>
+  </div>
+
+  <!-- DRESS CODE HERO SECTION -->
+  <div class="dresscode-hero-wrapper">
+    <img src="dresscode.png" alt="Dress Code Instructions" class="dresscode-hero-img" />
+  </div>
+
+  <!-- INFINITE AUTO-SCROLLING MARQUEE (MULTI-STACK) -->
+  <div class="marquee-section">
+    <div class="marquee-viewport">
+      <div class="marquee-track">
+        
+        <!-- ORIGINAL SET -->
+        <div class="marquee-tile text-tile style-1">
+          <div class="text-content">
+            WEAR
+            <span>Semi Formal</span>
+          </div>
+          <div class="arrow-indicator">&rarr;</div>
+        </div>
+
+        <div class="marquee-tile"><img src="1.jpeg" alt="Outfit 1" /></div>
+        <div class="marquee-tile"><img src="2.jpeg" alt="Outfit 2" /></div>
+        <div class="marquee-tile"><img src="3.jpeg" alt="Outfit 3" /></div>
+
+        <div class="marquee-tile text-tile style-2">
+          <div class="text-content">
+            WEAR
+            <span>All - Black</span>
+          </div>
+          <div class="arrow-indicator">&rarr;</div>
+        </div>
+
+        <div class="marquee-tile"><img src="4.jpeg" alt="Outfit 4" /></div>
+        <div class="marquee-tile"><img src="5.jpeg" alt="Outfit 5" /></div>
+        <div class="marquee-tile"><img src="6.jpeg" alt="Outfit 6" /></div>
+        <div class="marquee-tile"><img src="7.jpeg" alt="Outfit 7" /></div>
+        <div class="marquee-tile"><img src="8.jpeg" alt="Outfit 8" /></div>
+        <div class="marquee-tile"><img src="9.jpeg" alt="Outfit 9" /></div>
+        <div class="marquee-tile"><img src="10.jpeg" alt="Outfit 10" /></div>
+        <div class="marquee-tile"><img src="11.jpeg" alt="Outfit 11" /></div>
+        <div class="marquee-tile"><img src="12.jpeg" alt="Outfit 12" /></div>
+
+        <!-- DUPLICATE SET FOR SEAMLESS INFINITE LOOP -->
+        <div class="marquee-tile text-tile style-1">
+          <div class="text-content">
+            WEAR
+            <span>Semi Formal</span>
+          </div>
+          <div class="arrow-indicator">&rarr;</div>
+        </div>
+
+        <div class="marquee-tile"><img src="1.jpeg" alt="Outfit 1" /></div>
+        <div class="marquee-tile"><img src="2.jpeg" alt="Outfit 2" /></div>
+        <div class="marquee-tile"><img src="3.jpeg" alt="Outfit 3" /></div>
+
+        <div class="marquee-tile text-tile style-2">
+          <div class="text-content">
+            WEAR
+            <span>All - Black</span>
+          </div>
+          <div class="arrow-indicator">&rarr;</div>
+        </div>
+
+        <div class="marquee-tile"><img src="4.jpeg" alt="Outfit 4" /></div>
+        <div class="marquee-tile"><img src="5.jpeg" alt="Outfit 5" /></div>
+        <div class="marquee-tile"><img src="6.jpeg" alt="Outfit 6" /></div>
+        <div class="marquee-tile"><img src="7.jpeg" alt="Outfit 7" /></div>
+        <div class="marquee-tile"><img src="8.jpeg" alt="Outfit 8" /></div>
+        <div class="marquee-tile"><img src="9.jpeg" alt="Outfit 9" /></div>
+        <div class="marquee-tile"><img src="10.jpeg" alt="Outfit 10" /></div>
+        <div class="marquee-tile"><img src="11.jpeg" alt="Outfit 11" /></div>
+        <div class="marquee-tile"><img src="12.jpeg" alt="Outfit 12" /></div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
