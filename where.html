@@ -31,7 +31,7 @@
     justify-content: flex-start;
     position: relative;
     padding-top: 130px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
     background: 
       linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 70%, #000000 100%), 
       url('RosesBg.webp') center/cover no-repeat fixed;
@@ -131,7 +131,6 @@
   .dark-map-section {
     width: 94vw;
     max-width: 1200px;
-    /* --- MOVE MAP UP / DOWN HERE --- */
     transform: translateY(40px);
   }
 
@@ -155,6 +154,30 @@
 
   .dark-map-frame:hover iframe {
     filter: invert(92%) hue-rotate(180deg) contrast(110%) saturate(150%);
+  }
+
+  /* --- FOOTER / CREDITS STYLES --- */
+  .site-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: auto; 
+    position: relative;
+    z-index: 10;
+
+    /* --- ADJUST CREDITS UP / DOWN HERE --- */
+    transform: translateY(50px); /* Increase value to move DOWN, use negative (e.g. -20px) to move UP */
+  }
+
+  .credits-img {
+    max-width: clamp(150px, 40vw, 300px);
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
   }
 
   /* --- MOBILE RESPONSIVENESS --- */
@@ -185,6 +208,11 @@
 
     .dark-map-frame iframe {
       height: 65vh;
+    }
+
+    .site-footer {
+      /* Mobile specific vertical position tweak */
+      transform: translateY(30px); 
     }
   }
 </style>
@@ -228,6 +256,11 @@
       </iframe>
     </div>
   </div>
+  
+  <!-- SITE FOOTER / CREDITS -->
+  <footer class="site-footer">
+    <img src="credits.png" alt="Credits" class="credits-img" />
+  </footer>
 
 </div>
 

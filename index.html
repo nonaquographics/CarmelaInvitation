@@ -287,6 +287,27 @@
     text-align: center;
   }
 
+  /* --- FOOTER STYLES --- */
+  .site-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: auto;
+    position: relative;
+    z-index: 10;
+  }
+
+  .credits-img {
+    max-width: clamp(150px, 40vw, 300px);
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+  }
+
   /* --- PRELOADER INTRO SCREEN --- */
   .intro-screen {
     position: fixed;
@@ -1190,6 +1211,11 @@
 
   <div class="section-two-content">
   </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <img src="credits.png" alt="Credits" class="credits-img" />
+  </footer>
 </div>
 
 <div class="overlay" id="overlay">
@@ -1275,7 +1301,8 @@
       '18treasures.png',
       '18blessings.png',
       '18starlights.png',
-      'traditionsbg.png'
+      'traditionsbg.png',
+      'credits.png'
     ];
 
     function dismissPreloader() {

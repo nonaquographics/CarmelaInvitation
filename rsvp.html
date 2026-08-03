@@ -268,28 +268,29 @@
   }
 
   /* =========================================================
-     INFINITE AUTO-SCROLLING MARQUEE GRID (FLUSH & CLOSE)
+     INFINITE AUTO-SCROLLING MARQUEE GRID (REDESIGNED)
      ========================================================= */
   .marquee-section {
     width: 100vw;
     margin: 40px 0 0 0;
     overflow: hidden;
     position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #050505;
   }
 
   .marquee-viewport {
     width: 100%;
     overflow: hidden;
-    background: #000000;
   }
 
   .marquee-track {
     display: flex;
     width: max-content;
-    animation: infiniteScroll 35s linear infinite;
+    animation: infiniteScroll 38s linear infinite;
   }
 
-  /* Pause auto-scroll on mouse hover */
   .marquee-track:hover {
     animation-play-state: paused;
   }
@@ -299,14 +300,17 @@
     100% { transform: translateX(-50%); }
   }
 
-  /* --- MARQUEE TILES (FLUSH SIDE-BY-SIDE) --- */
+  /* --- MARQUEE TILES --- */
   .marquee-tile {
-    width: 320px;
+    width: 300px;
     height: var(--marquee-height);
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .marquee-tile img {
@@ -314,33 +318,57 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
+    filter: brightness(0.9) contrast(1.05);
   }
 
-  /* --- TEXT TILES (EDITORIAL STYLED) --- */
+  .marquee-tile:hover img {
+    transform: scale(1.06);
+    filter: brightness(1) contrast(1.1);
+  }
+
+  /* --- REDESIGNED EDITORIAL TEXT TILES --- */
   .text-tile {
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: #faf9f5;
     font-family: 'Space Mono', monospace;
     text-transform: uppercase;
+    position: relative;
+  }
+
+  .text-tile::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    pointer-events: none;
   }
 
   .text-tile.style-1 {
-    background-color: #000000; /* Soft pastel lavender blue */
+    background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+    color: #f4f2eb;
   }
 
   .text-tile.style-2 {
-    background-color: #290404; /* Muted gold/khaki tone */
-    color: #bb3434;
+    background: linear-gradient(135deg, #1f0303 0%, #0d0101 100%);
+    color: #e63939;
+  }
+  
+  .text-tile.style-2::before {
+    border-color: rgba(230, 57, 57, 0.2);
   }
 
   .text-content {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.05em;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    z-index: 1;
   }
 
   .text-content span {
@@ -349,13 +377,45 @@
     font-style: italic;
     font-weight: 400;
     text-transform: none;
-    font-size: 36px;
-    margin-top: 4px;
+    font-size: 40px;
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .tile-footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
   }
 
   .arrow-indicator {
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: normal;
+  }
+
+  /* --- FOOTER STYLES --- */
+  .site-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: auto; 
+    position: relative;
+    z-index: 10;
+  }
+
+  .credits-img {
+    max-width: clamp(150px, 40vw, 300px); 
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
   }
 
  /* =========================================================
@@ -364,43 +424,36 @@
   @media (max-width: 600px) {
     :root {
       --letter-top-offset: 130px;
-      
-      /* 1. SLIDESHOW HEIGHT (Lower number = shorter photos) */
       --marquee-height: 260px; 
     }
 
     .rsvp-container::before {
-    background-image: url('rsvpmobile.png') !important;
-  }
+      background-image: url('rsvpmobile.png') !important;
+    }
 
-    /* 2. CONFIRM BUTTON SIZE & POSITION ON MOBILE */
     .confirm-button-link {
-      width: 62px !important;  /* Controls how wide/big the button is */
-      bottom: 17% !important;   /* Move up/down (e.g. 10%, 15%) */
-      left: 51% !important;     /* Horizontal position */
+      width: 62px !important;  
+      bottom: 17% !important;   
+      left: 51% !important;     
     }
     
-
-/* 1. Dress code wrapper with background & padding so the roses are visible */
-  .dresscode-hero-wrapper {
-    background: url('traditionsbg.png') center top / cover no-repeat !important;
-    padding: 30px 20px; /* <--- Gives breathing room so the background shows around dresscode.png */
-    border-radius: 8px;
-  }
-
-  /* 2. Marquee section background */
- /* AFTER (FIXED): */
-  .marquee-viewport {
-    width: 100%;
-    overflow: hidden;
-    background: transparent !important;
-  }
-    /* 4. SLIDESHOW TILE WIDTH */
-    .marquee-tile {
-      width: 180px !important;  /* Controls photo width (keeps aspect ratio square/clean) */
+    .dresscode-hero-wrapper {
+      background: none !important;
+      padding: 0 !important;
+      margin-top: 200px !important;
+      margin-bottom: 30px !important;
     }
 
-    /* Keep header horizontal & unstacked */
+    .marquee-viewport {
+      width: 100%;
+      overflow: hidden;
+      background: transparent !important;
+    }
+
+    .marquee-tile {
+      width: 180px !important;  
+    }
+
     .site-header {
       padding: 10px 15px;
     }
@@ -414,21 +467,21 @@
       height: 55px;
     }
 
-  .rsvp-letter-wrapper {
-    margin-top: 130px !important;  /* Decrease/Negative (e.g., -40px) to move UP | Increase (e.g., 30px) to move DOWN */
-    margin-left: 5px !important;
-  }
+    .rsvp-letter-wrapper {
+      margin-top: 130px !important;  
+      margin-left: 5px !important;
+    }
 
     .text-tile {
-      padding: 18px 12px;
+      padding: 20px 15px;
     }
 
     .text-content {
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .text-content span {
-      font-size: 22px;
+      font-size: 24px;
     }
   }
 </style>
@@ -476,7 +529,7 @@
     <img src="dresscode.png" alt="Dress Code Instructions" class="dresscode-hero-img" />
   </div>
 
-  <!-- INFINITE AUTO-SCROLLING MARQUEE (MULTI-STACK) -->
+  <!-- INFINITE AUTO-SCROLLING MARQUEE (EDITORIAL REDESIGN) -->
   <div class="marquee-section">
     <div class="marquee-viewport">
       <div class="marquee-track">
@@ -487,7 +540,10 @@
             WEAR
             <span>Semi Formal</span>
           </div>
-          <div class="arrow-indicator">&rarr;</div>
+          <div class="tile-footer-info">
+            <span>ATTIRE</span>
+            <span class="arrow-indicator">&rarr;</span>
+          </div>
         </div>
 
         <div class="marquee-tile"><img src="1.jpeg" alt="Outfit 1" /></div>
@@ -496,10 +552,13 @@
 
         <div class="marquee-tile text-tile style-2">
           <div class="text-content">
-            WEAR
-            <span>All - Black</span>
+            COLOR
+            <span>All-Black</span>
           </div>
-          <div class="arrow-indicator">&rarr;</div>
+          <div class="tile-footer-info">
+            <span>TONE</span>
+            <span class="arrow-indicator">&rarr;</span>
+          </div>
         </div>
 
         <div class="marquee-tile"><img src="4.jpeg" alt="Outfit 4" /></div>
@@ -515,10 +574,13 @@
         <!-- DUPLICATE SET FOR SEAMLESS INFINITE LOOP -->
         <div class="marquee-tile text-tile style-1">
           <div class="text-content">
-            WEAR
+            CODE // 01
             <span>Semi Formal</span>
           </div>
-          <div class="arrow-indicator">&rarr;</div>
+          <div class="tile-footer-info">
+            <span>ATTIRE</span>
+            <span class="arrow-indicator">&rarr;</span>
+          </div>
         </div>
 
         <div class="marquee-tile"><img src="1.jpeg" alt="Outfit 1" /></div>
@@ -527,10 +589,13 @@
 
         <div class="marquee-tile text-tile style-2">
           <div class="text-content">
-            WEAR
-            <span>All - Black</span>
+            PALETTE // 02
+            <span>All-Black</span>
           </div>
-          <div class="arrow-indicator">&rarr;</div>
+          <div class="tile-footer-info">
+            <span>TONE</span>
+            <span class="arrow-indicator">&rarr;</span>
+          </div>
         </div>
 
         <div class="marquee-tile"><img src="4.jpeg" alt="Outfit 4" /></div>
@@ -546,6 +611,11 @@
       </div>
     </div>
   </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <img src="credits.png" alt="Credits" class="credits-img" />
+  </footer>
 
 </div>
 
