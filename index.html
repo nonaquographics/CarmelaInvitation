@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Invitation Envelope</title>
+<title>home</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -21,9 +22,6 @@
     --card2:#231e17;
     --logo-size: clamp(70px, 18vw, 150px); 
 
-    /* =========================================================
-       COUNTDOWN SIZING & SPACING CONTROLS (DESKTOP DEFAULT)
-       ========================================================= */
     --digit-width: clamp(28px, 7.5vw, 65px);      
     --digit-height: clamp(42px, 11vw, 98px);     
     --digit-gap: clamp(-18px, -2.5vw, -40px);         
@@ -37,13 +35,9 @@
     
     --countdown-gap: clamp(4px, 1.5vw, 24px);    
 
-    /* --- POSITIONING CONTROLS --- */
     --until-margin-top: clamp(4px, 1.5vw, 20px); 
     --colon-offset-y: 2px;  
 
-    /* =========================================================
-       INDIVIDUAL DIGIT SIZING (Width / Height)
-       ========================================================= */
     --days-digit-width: var(--digit-width);
     --days-digit-height: var(--digit-height);
 
@@ -56,9 +50,6 @@
     --secs-digit-width: var(--digit-width);
     --secs-digit-height: var(--digit-height);
 
-    /* =========================================================
-       INDIVIDUAL LABEL SIZING (Days, Hours, Minutes, Seconds text)
-       ========================================================= */
     --days-label-height: clamp(22px, 5.5vw, 60px);
     --hours-label-height: clamp(22px, 5.5vw, 60px);
     --mins-label-height: clamp(20px, 5vw, 55px);
@@ -67,7 +58,6 @@
 
   *{box-sizing:border-box;}
 
-  /* --- BODY & PAGE CONTAINER --- */
   body {
     margin: 0;
     padding: 0;
@@ -76,7 +66,6 @@
     overflow-x: hidden;
   }
 
-  /* --- HERO / SECTION 1 --- */
   .hero-section {
     width: 100%;
     min-height: 100vh;
@@ -92,7 +81,6 @@
       url('RosesBg.webp') center/cover no-repeat;
   }
 
-  /* --- SECTION 2 --- */
   .section-two {
     width: 100%;
     min-height: 100vh;
@@ -104,7 +92,6 @@
     padding-bottom: 40px;
   }
 
-  /* --- HEADER GRAPHIC & OVERLAYED COUNTDOWN --- */
   .countdown-divider {
     position: relative;
     width: 100%;
@@ -229,7 +216,6 @@
     object-fit: contain;
   }
 
-  /* --- 18 TRADITIONS SECTION STYLES --- */
   .traditions-container {
     width: 100%;
     max-width: 1000px; 
@@ -287,7 +273,6 @@
     text-align: center;
   }
 
-  /* --- FOOTER STYLES --- */
   .site-footer {
     width: 100%;
     display: flex;
@@ -308,7 +293,6 @@
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
   }
 
-  /* --- PRELOADER INTRO SCREEN --- */
   .intro-screen {
     position: fixed;
     inset: 0;
@@ -427,7 +411,6 @@
     50% { opacity: 1; transform: translateY(-2px); }
   }
 
-  /* --- HEADER & NAVIGATION --- */
   .site-header {
     position: absolute;
     top: 0;
@@ -517,7 +500,6 @@
     75% { rotate: -2deg; translate: -1px -1px; filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7)); }
   }
 
-  /* MOBILE OVERRIDES */
   @media (max-width: 600px) {
     .hero-section {
       background: 
@@ -659,16 +641,17 @@
     left:50%;
     bottom:0;
     transform:translateX(-50%) translateY(0) scale(.97);
-    height:calc(var(--env-h) * 1.75);
-    aspect-ratio:74/105;
-    background: linear-gradient(150deg, var(--card2), var(--card1) 60%);
+    width:min(72vw, 310px);
+    height:auto;
+    aspect-ratio:auto;
+    background: transparent;
     border-radius:2px;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:10%;
+    padding:0;
     text-align:center;
-    box-shadow:0 0 0 1px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow:none;
     opacity:.85;
     transition:opacity .7s cubic-bezier(.22,.8,.25,1) .1s, transform .7s cubic-bezier(.22,.8,.25,1) .1s;
     overflow:hidden;
@@ -697,11 +680,11 @@
   }
 
   .card img{
-    position:absolute;
-    inset:0;
+    position:relative;
+    inset:unset;
     width:100%;
-    height:100%;
-    object-fit:cover;
+    height:auto;
+    object-fit:contain;
     object-position:center;
     display:none;
     opacity:0;
@@ -798,7 +781,6 @@
   }
   .overlay.show{ opacity:1; pointer-events:auto; }
 
-  /* --- TRADITION MODAL OVERLAYS --- */
   .tradition-modal-overlay {
     position: fixed;
     inset: 0;
@@ -861,34 +843,29 @@
   }
 
   .big-card{
-    --bc-w: min(90vw, calc((100dvh - 100px) / 1.4189), 560px);
+    --bc-w: min(94vw, 620px);
     position:relative;
     width:var(--bc-w);
-    height:calc(var(--bc-w) * (105 / 74));
-    background:linear-gradient(150deg, var(--card2), var(--card1) 60%);
+    height:auto;
+    background:transparent;
     border-radius: 0;
     display:none;
     align-items:center;
     justify-content:center;
-    padding:10%;
+    padding:0;
     text-align:center;
     transform:perspective(1400px) scale(.78) translateY(26px) rotateX(10deg);
     transform-origin:50% 85%;
     opacity:0;
     transition:transform 1s cubic-bezier(.16,.9,.18,1.25), opacity .5s ease;
     overflow:hidden;
-    box-shadow:0 40px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
-    animation:glow-breathe 3.6s ease-in-out 1.9s infinite;
+    box-shadow:none;
+    animation:none;
   }
   .overlay.show .big-card{
     display:flex;
     transform:perspective(1400px) scale(1) translateY(0) rotateX(0deg);
     opacity:1;
-  }
-
-  @keyframes glow-breathe{
-    0%, 100%{ box-shadow:0 40px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 0 rgba(240,217,166,0); }
-    50%{ box-shadow:0 40px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 34px rgba(201,166,107,0.35); }
   }
 
   .big-card::after{
@@ -927,11 +904,11 @@
   .overlay.show .curtain-right{ transform:translateX(104%) rotateY(4deg); }
 
   .big-card img{
-    position:absolute;
-    inset:0;
+    position:relative;
+    inset:unset;
     width:100%;
-    height:100%;
-    object-fit:cover;
+    height:auto;
+    object-fit:contain;
     object-position:center;
     display:none;
     opacity:0;
@@ -980,7 +957,6 @@
 </head>
 <body>
 
-<!-- INTRO ANIMATION SCREEN -->
 <div class="intro-screen" id="introScreen">
   <div class="intro-spotlight"></div>
 
@@ -1002,7 +978,6 @@
   </div>
 </div>
 
-<!-- HERO / SECTION 1 -->
 <div class="hero-section">
   <header class="site-header">
     <a href="#" class="logo-link" title="Home / Refresh">
@@ -1034,7 +1009,7 @@
 
         <div class="card-window" id="cardWindow">
           <div class="card" id="card">
-            <img id="inviteImg" alt="Your invitation" />
+            <img id="inviteImg" src="MelaInvi.png" alt="Your invitation" />
             <p class="placeholder" id="cardPlaceholder">your invitation image goes here</p>
           </div>
         </div>
@@ -1138,7 +1113,6 @@
   <p class="hint" id="hint">tap to open</p>
 </div>
 
-<!-- SECTION 2 -->
 <div class="section-two">
   
   <div class="countdown-divider">
@@ -1212,7 +1186,6 @@
   <div class="section-two-content">
   </div>
 
-  <!-- SITE FOOTER -->
   <footer class="site-footer">
     <img src="credits.png" alt="Credits" class="credits-img" />
   </footer>
@@ -1221,7 +1194,7 @@
 <div class="overlay" id="overlay">
   <div class="big-card" id="bigCard">
     <button class="close" id="closeBtn" aria-label="Close">✕</button>
-    <img id="bigImg" src="invitest.jpg" alt="Your invitation" />
+    <img id="bigImg" src="MelaInvi.png" alt="Your invitation" />
     <p class="placeholder" id="bigPlaceholder">your invitation image goes here</p>
 
     <div class="curtain curtain-left"></div>
@@ -1229,28 +1202,24 @@
   </div>
 </div>
 
-<!-- BLOOMS MODAL OVERLAY -->
 <div class="tradition-modal-overlay" id="bloomsOverlay">
   <div class="tradition-modal-wrapper">
     <img src="18blooms.png" alt="18 Blooms" class="tradition-modal-img" />
   </div>
 </div>
 
-<!-- TREASURES MODAL OVERLAY -->
 <div class="tradition-modal-overlay" id="treasuresOverlay">
   <div class="tradition-modal-wrapper">
     <img src="18treasures.png" alt="18 Treasures" class="tradition-modal-img" />
   </div>
 </div>
 
-<!-- BLESSINGS MODAL OVERLAY -->
 <div class="tradition-modal-overlay" id="blessingsOverlay">
   <div class="tradition-modal-wrapper">
     <img src="18blessings.png" alt="18 Blessings" class="tradition-modal-img" />
   </div>
 </div>
 
-<!-- STARLIGHTS MODAL OVERLAY -->
 <div class="tradition-modal-overlay" id="starlightsOverlay">
   <div class="tradition-modal-wrapper">
     <img src="18starlights.png" alt="18 Starlights" class="tradition-modal-img" />
@@ -1258,20 +1227,14 @@
 </div>
 
 <script>
- /* =========================================================
-     1. ASSET PRELOADER LOGIC (ONCE PER SESSION)
-     ========================================================= */
   const introScreen = document.getElementById('introScreen');
   const MIN_PRELOAD_TIME = 2800;
 
-  // Check if user has already seen the intro during this browser session
   if (sessionStorage.getItem('hasSeenIntro')) {
-    // Hide immediately with no delay/animation if already seen
     if (introScreen) {
       introScreen.style.display = 'none';
     }
   } else {
-    // Mark as seen so refreshes or internal navigation won't trigger it again
     sessionStorage.setItem('hasSeenIntro', 'true');
 
     const assetsToPreload = [
@@ -1302,7 +1265,8 @@
       '18blessings.png',
       '18starlights.png',
       'traditionsbg.png',
-      'credits.png'
+      'credits.png',
+      'MelaInvi.png'
     ];
 
     function dismissPreloader() {
@@ -1332,9 +1296,6 @@
     }
   }
 
-  /* =========================================================
-     2. COUNTDOWN TIMER LOGIC
-     ========================================================= */
   const eventDate = new Date("2026-08-21T17:00:00+08:00").getTime(); 
 
   function updateCountdown() {
@@ -1373,10 +1334,6 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-
-  /* =========================================================
-     3. ENVELOPE & CARD ANIMATIONS
-     ========================================================= */
   function wireAutoImage(imgId, placeholderId){
     const img = document.getElementById(imgId);
     const placeholder = document.getElementById(placeholderId);
@@ -1480,10 +1437,6 @@
   closeBtn.addEventListener('click', closeEnvelope);
   overlay.addEventListener('click', (e) => { if(e.target === overlay) closeEnvelope(); });
 
-
-  /* =========================================================
-     4. TRADITIONS MODALS LOGIC
-     ========================================================= */
   function setupTraditionModal(cardId, overlayId) {
     const card = document.getElementById(cardId);
     const overlay = document.getElementById(overlayId);

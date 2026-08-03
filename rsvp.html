@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RSVP - Birthday Celebration</title>
+<title>rsvp</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -11,34 +12,25 @@
   :root {
     --logo-size: clamp(70px, 18vw, 150px); 
 
-    /* =========================================================
-       RSVP PAGE LAYOUT & POSITIONING CONTROLS
-       ========================================================= */
-    
-    /* 1. LETTER IMAGE (rsvpletter.png) */
     --letter-width: clamp(270px, 85vw, 680px); 
     --letter-top-offset: 70px;                 
     --letter-shift-x: 40px;                     
 
-    /* 2. CONFIRM BUTTON (confirm.png) */
     --confirm-width: clamp(120px, 35vw, 4px); 
     --confirm-bottom: 17%;                     
     --confirm-left: 51%;                       
     --confirm-shift-x: -50%;                   
 
-    /* 3. CONFIRM HOVER LINE (confirmline.png) */
     --line-width: 100%;                        
     --line-offset-y: -92px;                      
     --line-shift-x: 0px;                       
 
-    /* 4. DRESS CODE & CAROUSEL CONTROLS */
     --hero-max-width: 740px;                  
     --marquee-height: 480px;             
   }
 
   * { box-sizing: border-box; }
 
-  /* --- BODY & CONTAINER --- */
   body {
     margin: 0;
     padding: 0;
@@ -47,7 +39,6 @@
     overflow-x: hidden;
   }
 
-  /* --- RSVP CONTAINER --- */
   .rsvp-container {
     width: 100%;
     min-height: 100vh;
@@ -60,7 +51,6 @@
     background-color: #000000;
   }
 
-  /* LOCKED BACKGROUND LAYER */
   .rsvp-container::before {
     content: "";
     position: absolute;
@@ -81,7 +71,6 @@
     z-index: 2;
   }
 
-  /* --- SITE HEADER & NAV --- */
   .site-header {
     position: absolute;
     top: 0;
@@ -171,7 +160,6 @@
     75% { rotate: -2deg; translate: -1px -1px; filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7)); }
   }
 
-  /* --- RSVP STAGE & LETTER --- */
   .rsvp-letter-wrapper {
     position: relative;
     width: var(--letter-width);
@@ -189,7 +177,6 @@
     object-fit: contain;
   }
 
-  /* --- CONFIRM BUTTON & HOVER LINE --- */
   .confirm-button-link {
     position: absolute;
     bottom: var(--confirm-bottom);
@@ -248,9 +235,6 @@
     75% { rotate: -2deg; translate: -1px -1px; filter: drop-shadow(0px 0px 10px rgba(240,217,166,0.7)); }
   }
 
-  /* =========================================================
-     DRESS CODE HERO SECTION
-     ========================================================= */
   .dresscode-hero-wrapper {
     width: 92vw;
     max-width: var(--hero-max-width);
@@ -267,9 +251,6 @@
     object-fit: contain;
   }
 
-  /* =========================================================
-     INFINITE AUTO-SCROLLING MARQUEE GRID (REDESIGNED)
-     ========================================================= */
   .marquee-section {
     width: 100vw;
     margin: 40px 0 0 0;
@@ -300,7 +281,6 @@
     100% { transform: translateX(-50%); }
   }
 
-  /* --- MARQUEE TILES --- */
   .marquee-tile {
     width: 300px;
     height: var(--marquee-height);
@@ -327,7 +307,6 @@
     filter: brightness(1) contrast(1.1);
   }
 
-  /* --- REDESIGNED EDITORIAL TEXT TILES --- */
   .text-tile {
     padding: 40px 30px;
     display: flex;
@@ -397,7 +376,6 @@
     font-weight: normal;
   }
 
-  /* --- FOOTER STYLES --- */
   .site-footer {
     width: 100%;
     display: flex;
@@ -418,9 +396,6 @@
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
   }
 
- /* =========================================================
-     MOBILE RESPONSIVENESS ONLY (< 600px)
-     ========================================================= */
   @media (max-width: 600px) {
     :root {
       --letter-top-offset: 130px;
@@ -490,7 +465,6 @@
 
 <div class="rsvp-container">
   
-  <!-- SITE HEADER -->
   <header class="site-header">
     <a href="index.html" class="logo-link" title="Home">
       <img src="Logo.png" alt="Logo" class="logo-img" />
@@ -512,7 +486,6 @@
     </nav>
   </header>
 
-  <!-- LETTER & CONFIRMATION SECTION -->
   <div class="rsvp-letter-wrapper">
     <img src="rsvpletter.png" alt="RSVP Letter" class="rsvp-letter-img" />
 
@@ -524,17 +497,14 @@
     </a>
   </div>
 
-  <!-- DRESS CODE HERO SECTION -->
   <div class="dresscode-hero-wrapper">
     <img src="dresscode.png" alt="Dress Code Instructions" class="dresscode-hero-img" />
   </div>
 
-  <!-- INFINITE AUTO-SCROLLING MARQUEE (EDITORIAL REDESIGN) -->
   <div class="marquee-section">
     <div class="marquee-viewport">
       <div class="marquee-track">
         
-        <!-- ORIGINAL SET -->
         <div class="marquee-tile text-tile style-1">
           <div class="text-content">
             WEAR
@@ -571,7 +541,6 @@
         <div class="marquee-tile"><img src="11.jpeg" alt="Outfit 11" /></div>
         <div class="marquee-tile"><img src="12.jpeg" alt="Outfit 12" /></div>
 
-        <!-- DUPLICATE SET FOR SEAMLESS INFINITE LOOP -->
         <div class="marquee-tile text-tile style-1">
           <div class="text-content">
             CODE // 01
@@ -612,7 +581,6 @@
     </div>
   </div>
 
-  <!-- SITE FOOTER -->
   <footer class="site-footer">
     <img src="credits.png" alt="Credits" class="credits-img" />
   </footer>
