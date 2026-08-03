@@ -1227,6 +1227,15 @@
 </div>
 
 <script>
+
+  document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('img').forEach(img => {
+    // Prevent right-click menu on images
+    img.addEventListener('contextmenu', e => e.preventDefault());
+    // Prevent dragging images
+    img.setAttribute('draggable', 'false');
+  });
+});
   const introScreen = document.getElementById('introScreen');
   const MIN_PRELOAD_TIME = 2800;
 
